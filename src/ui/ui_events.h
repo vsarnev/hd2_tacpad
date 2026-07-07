@@ -25,6 +25,8 @@ void resetPresets();
 void finalizeManualExecution();
 void manualExecuteDirection(int direction);
 void initManualViewToggle();
+void initManualArmButton();
+void manualForceDisarm(void);
 void initCallInScreen();
 void showCallIn(const lv_img_dsc_t *icon, const char *name, const char *voice);
 void initHellbombButton();

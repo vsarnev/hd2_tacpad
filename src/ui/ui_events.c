@@ -67,6 +67,17 @@ static void manualSetViewToggleVisible(bool visible);
 static void manualUpdateViewToggle();
 static const char *pickVoiceLine(const char *name, const char *soundPath, int list, int matchIndex);
 
+// Manual "arm" toggle, in the empty centre of the d-pad. Arming holds Ctrl down (opening the in-game
+// stratagem menu) and unlocks the 4 arrows; a completed code fires and auto-disarms (its own Ctrl-up
+// throws), and disarming by hand releases Ctrl. Arrows are inert until armed. See main.c
+// hidHoldModifier / hidReleaseModifier.
+bool manualArmed = false;
+static lv_obj_t *manualArmBtn = NULL;
+static lv_obj_t *manualArmLabel = NULL;
+static void manualSetArrowsEnabled(bool enabled);
+static void manualUpdateArmButton(void);
+static void manualSetArmed(bool armed, bool sendHid, bool playSound);
+
 lv_timer_t *timerMsg = NULL;
 bool presetImageMode = false;
 char presetKey[3] = "p0i";
@@ -438,6 +449,123 @@ void initManualViewToggle()
 	lv_obj_add_flag(manualViewBtnLoadout, LV_OBJ_FLAG_HIDDEN);
 
 	manualUpdateViewToggle();
+}
+
+// Dim the 4 arrows when locked, full opacity when live.
+static void manualSetArrowsEnabled(bool enabled)
+{
+	lv_opa_t opa = enabled ? LV_OPA_COVER : LV_OPA_40;
+	lv_obj_set_style_opa(objects.manual_arrow_up, opa, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_opa(objects.manual_arrow_down, opa, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_opa(objects.manual_arrow_left, opa, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_opa(objects.manual_arrow_right, opa, LV_PART_MAIN | LV_STATE_DEFAULT);
+}
+
+// Reflect the arm state on the centre button: the up-chevron stays, its colour + the button fill
+// flip (white-on-dark when locked, black-on-gold when live).
+static void manualUpdateArmButton(void)
+{
+	if (manualArmBtn == NULL)
+	{
+		return;
+	}
+
+	lv_obj_set_style_bg_color(manualArmBtn, lv_color_hex(manualArmed ? colorActive : 0x000000),
+							  LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(manualArmLabel, lv_color_hex(manualArmed ? 0x000000 : colorTheme),
+								LV_PART_MAIN | LV_STATE_DEFAULT);
+}
+
+// Enter/leave the armed state. sendHid=false when a firing sequence will release Ctrl itself (the
+// completion burst ends in a Ctrl-up), so we neither double-release nor race that burst.
+static void manualSetArmed(bool armed, bool sendHid, bool playSound)
+{
+	manualArmed = armed;
+
+	if (sendHid)
+	{
+		if (armed)
+		{
+			hidHoldModifier(INPUT_CTRL_MASK);
+		}
+		else
+		{
+			hidReleaseModifier();
+		}
+	}
+
+	manualSetArrowsEnabled(armed);
+	manualUpdateArmButton();
+
+	if (playSound)
+	{
+		playbackSound(armed ? SND_STRAT_START : SND_STRAT_CLOSE);
+	}
+
+	// Leaving armed: drop any half-entered sequence so the next arm starts clean.
+	if (!armed)
+	{
+		if (timerManual != NULL)
+		{
+			lv_timer_del(timerManual);
+			timerManual = NULL;
+		}
+
+		manualMatch = -1;
+		manualIndex = 0;
+
+		for (uint8_t c = 0; c < MAX_CMD_LENGTH; c++)
+		{
+			manualSequence[c] = 0;
+		}
+
+		if (!userSGautoComplete)
+		{
+			updateManualSequence();
+		}
+		else
+		{
+			resetAllManSeqs();
+		}
+	}
+}
+
+// Centre-of-d-pad toggle handler.
+static void action_manual_arm_toggle(lv_event_t *e)
+{
+	(void)e;
+	manualSetArmed(!manualArmed, true, true);
+}
+
+// Force the pad disarmed (Ctrl released) when leaving the manual screen, so Ctrl never sticks held.
+void manualForceDisarm(void)
+{
+	if (manualArmed)
+	{
+		manualSetArmed(false, true, false);
+	}
+}
+
+// Build the arm/disarm toggle in the empty centre cell of the d-pad cross (the RIGHT_MID arrow flex
+// centres near x362/y160; a 60px round button fits the gap without touching the 76px arrows).
+void initManualArmButton(void)
+{
+	manualArmBtn = lv_btn_create(objects.manual);
+	lv_obj_set_size(manualArmBtn, 60, 60);
+	lv_obj_align(manualArmBtn, LV_ALIGN_RIGHT_MID, -88, 0);
+	add_style_button_std(manualArmBtn);
+	lv_obj_set_style_radius(manualArmBtn, 30, LV_PART_MAIN | LV_STATE_DEFAULT); // round — clearly not an arrow
+	lv_obj_set_style_pad_all(manualArmBtn, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_event_cb(manualArmBtn, action_manual_arm_toggle, LV_EVENT_CLICKED, NULL);
+
+	manualArmLabel = lv_label_create(manualArmBtn);
+	lv_label_set_text(manualArmLabel, LV_SYMBOL_UP); // stylised up-chevron; colour reflects arm state
+	lv_obj_set_style_text_font(manualArmLabel, &lv_font_montserrat_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_center(manualArmLabel);
+
+	manualArmed = false;
+	manualUpdateArmButton();
+	manualSetArrowsEnabled(false);
 }
 
 void action_goto_setup(lv_event_t *e)
@@ -1124,6 +1252,13 @@ void resetPresets()
 // and the swipe surface.
 void manualExecuteDirection(int arrowDirection)
 {
+	// The arrows are inert until the pad is armed (Ctrl held / in-game stratagem menu open). Arming
+	// is done from the centre d-pad toggle.
+	if (!manualArmed)
+	{
+		return;
+	}
+
 	// Touch-bounce double-clicks are handled at the source — the release-bridge in lv_port.c merges
 	// the panel's contact flicker into one clean press — so no debounce is needed here.
 
@@ -1469,6 +1604,15 @@ void finalizeManualExecution()
 		playbackSound(SND_PRIME);                   // ...overridden by the Helldivers "primed" cue
 
 		showCallIn(icon, name, voice); // full-screen reveal + the queued voice callout
+
+		// Auto-disarm: the sequence burst above ends by releasing Ctrl (that Ctrl-up is the throw),
+		// so just flip the arm UI/state here — do NOT release again (it would race the burst).
+		if (manualArmed)
+		{
+			manualArmed = false;
+			manualSetArrowsEnabled(false);
+			manualUpdateArmButton();
+		}
 	}
 
 	manualMatch = -1;

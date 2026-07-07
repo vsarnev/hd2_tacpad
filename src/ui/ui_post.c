@@ -14,6 +14,27 @@ static void manual_back_sound_cb(lv_event_t *e)
   playbackSound(SND_LOADOUT_CLOSE);
 }
 
+// The config/settings screen is entered (gear, obj20) and left (back, obj59) via EEZ flow, which
+// plays no sound. Give them the same open/close cues the other screens use.
+static void config_open_sound_cb(lv_event_t *e)
+{
+  (void)e;
+  playbackSound(SND_LOADOUT_OPEN);
+}
+
+static void config_close_sound_cb(lv_event_t *e)
+{
+  (void)e;
+  playbackSound(SND_LOADOUT_CLOSE);
+}
+
+// Leaving the manual screen while armed would leave Ctrl held down on the host — force a disarm.
+static void manual_unload_disarm_cb(lv_event_t *e)
+{
+  (void)e;
+  manualForceDisarm();
+}
+
 void ui_post()
 {
   lv_obj_t *tabsBtnsList[] = {
@@ -68,6 +89,10 @@ void ui_post()
   // Build the loadout/utility view-toggle buttons on the manual screen (bottom, by the back arrow).
   initManualViewToggle();
 
+  // Build the arm/disarm toggle in the centre of the manual d-pad (holds Ctrl to open the in-game
+  // stratagem menu; arrows are locked until armed).
+  initManualArmButton();
+
   // Build the full-screen "REQUEST RECEIVED" call-in reveal (top layer, shown when a stratagem fires).
   initCallInScreen();
 
@@ -85,4 +110,11 @@ void ui_post()
 
   // Give the manual back button its close cue (its flow navigation plays nothing on its own).
   lv_obj_add_event_cb(objects.obj71, manual_back_sound_cb, LV_EVENT_CLICKED, NULL);
+
+  // Same for the settings screen's gear (enter) and back (exit) buttons.
+  lv_obj_add_event_cb(objects.obj20, config_open_sound_cb, LV_EVENT_CLICKED, NULL);
+  lv_obj_add_event_cb(objects.obj59, config_close_sound_cb, LV_EVENT_CLICKED, NULL);
+
+  // Safety: if the manual screen is left while armed, release the held Ctrl so it never sticks.
+  lv_obj_add_event_cb(objects.manual, manual_unload_disarm_cb, LV_EVENT_SCREEN_UNLOAD_START, NULL);
 }

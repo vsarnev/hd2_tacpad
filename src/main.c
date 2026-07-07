@@ -168,6 +168,24 @@ void updateConnection()
 // Delay for checking if a the stratagem execution buffer is filled
 #define INPUT_CHECK_DELAY 5
 
+// Manual "arm" mode: the UI task asks the HID task to hold the stratagem modifier (Ctrl) down —
+// opening the in-game stratagem menu — or to release it (closing/throwing). Routing it through the
+// HID task keeps every HID report on one task, so it can never race the sequence burst below.
+enum { HID_ARM_NONE = 0, HID_ARM_HOLD, HID_ARM_RELEASE };
+static volatile int hidArmRequest = HID_ARM_NONE;
+static volatile uint8_t hidArmMask = 0;
+
+void hidHoldModifier(uint8_t mask)
+{
+  hidArmMask = mask;
+  hidArmRequest = HID_ARM_HOLD;
+}
+
+void hidReleaseModifier(void)
+{
+  hidArmRequest = HID_ARM_RELEASE;
+}
+
 // Task for exeuction of HID inputs
 void hid_input_task(void *pvParameters)
 {
@@ -175,25 +193,35 @@ void hid_input_task(void *pvParameters)
   {
     vTaskDelay(INPUT_CHECK_DELAY / portTICK_PERIOD_MS);
 
+    // Resolve the active HID sender once per tick; skip the tick if nothing is connected (do NOT
+    // return — that would kill the task permanently and no input would ever send again).
+    void (*fptr)(unsigned char, unsigned char, unsigned char);
+
+    switch (connectionType)
+    {
+    case CT_BLUETOOTH:
+      fptr = &ble_keyboard_send;
+      break;
+    case CT_USB:
+      fptr = &usb_keyboard_send;
+      break;
+    default:
+      hidArmRequest = HID_ARM_NONE; // nothing connected to send to; drop any pending arm request
+      continue;
+    }
+
+    // Service a pending arm/disarm request (hold Ctrl to open the menu, or release to close/throw).
+    if (hidArmRequest != HID_ARM_NONE)
+    {
+      fptr(hidArmRequest == HID_ARM_HOLD ? hidArmMask : 0, 0, 0);
+      hidArmRequest = HID_ARM_NONE;
+    }
+
     if (stratagemCode[0] > 0)
     {
       ESP_LOGI(TAG, "Send command");
 
       uint8_t cmdIndex = 0;
-
-      void (*fptr)(unsigned char, unsigned char, unsigned char);
-
-      switch (connectionType)
-      {
-      case CT_BLUETOOTH:
-        fptr = &ble_keyboard_send;
-        break;
-      case CT_USB:
-        fptr = &usb_keyboard_send;
-        break;
-      default:
-        return;
-      }
 
       // Pre-calculate one time for further use
       double inputDelayPeriod = inputDelay / portTICK_PERIOD_MS;
@@ -223,11 +251,12 @@ void hid_input_task(void *pvParameters)
         cmdIndex++;
       }
 
+      // Release everything (this final Ctrl-up is what throws the stratagem — and, in arm mode,
+      // is the auto-disarm after a completed code).
       fptr(0, 0, 0);
 
       ESP_LOGI(TAG, "Finish command");
     }
-
   }
 }
 

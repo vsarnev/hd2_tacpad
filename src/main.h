@@ -77,6 +77,8 @@ enum styleColors
 void app_main();
 void playbackSound(char *path);
 void setStratagemCode(uint8_t sequence[9], uint8_t mask, bool plain);
+void hidHoldModifier(uint8_t mask); // hold a modifier (Ctrl) down — opens the in-game stratagem menu
+void hidReleaseModifier(void);      // release the held modifier — closes/throws
 void dimScreen(int brightness);
 void updateConnection();
 void updateBatteryInfo();
