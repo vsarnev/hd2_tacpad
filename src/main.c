@@ -163,9 +163,18 @@ void updateConnection()
 // Manual "arm" mode: the UI task asks the HID task to hold the stratagem modifier (Ctrl) down —
 // opening the in-game stratagem menu — or to release it (closing/throwing). Routing it through the
 // HID task keeps every HID report on one task, so it can never race the sequence burst below.
-enum { HID_ARM_NONE = 0, HID_ARM_HOLD, HID_ARM_RELEASE };
+// PULSE = release then re-hold, i.e. reset the in-game menu (used when a wrong input clears a
+// partially-entered code so the pad and the game stay in sync).
+enum { HID_ARM_NONE = 0, HID_ARM_HOLD, HID_ARM_RELEASE, HID_ARM_PULSE };
 static volatile int hidArmRequest = HID_ARM_NONE;
 static volatile uint8_t hidArmMask = 0;
+
+// Live-key ring buffer: individual keystrokes sent while armed (modifier held) so the in-game
+// stratagem menu builds as the user taps, instead of one burst at the very end.
+#define HID_LIVE_QUEUE_LEN 16
+static volatile uint8_t hidLiveQueue[HID_LIVE_QUEUE_LEN];
+static volatile uint8_t hidLiveHead = 0;
+static volatile uint8_t hidLiveTail = 0;
 
 void hidHoldModifier(uint8_t mask)
 {
@@ -176,6 +185,24 @@ void hidHoldModifier(uint8_t mask)
 void hidReleaseModifier(void)
 {
   hidArmRequest = HID_ARM_RELEASE;
+}
+
+void hidPulseModifier(uint8_t mask)
+{
+  hidArmMask = mask;
+  hidArmRequest = HID_ARM_PULSE;
+}
+
+void hidSendLiveKey(uint8_t mask, uint8_t keycode)
+{
+  hidArmMask = mask; // the modifier is held across live keys
+  uint8_t next = (hidLiveTail + 1) % HID_LIVE_QUEUE_LEN;
+  if (next == hidLiveHead)
+  {
+    return; // queue full (never at human tap speed) — drop
+  }
+  hidLiveQueue[hidLiveTail] = keycode;
+  hidLiveTail = next;
 }
 
 // Task for exeuction of HID inputs
@@ -198,21 +225,47 @@ void hid_input_task(void *pvParameters)
       fptr = &usb_keyboard_send;
       break;
     default:
-      hidArmRequest = HID_ARM_NONE; // nothing connected to send to; drop any pending arm request
+      // Nothing connected: drop pending requests so nothing fires stale on reconnect.
+      hidArmRequest = HID_ARM_NONE;
+      hidLiveHead = hidLiveTail;
       continue;
     }
 
-    // Service a pending arm/disarm request (hold Ctrl to open the menu, or release to close/throw).
+    double inputDelayPeriod = inputDelay / portTICK_PERIOD_MS;
+
+    // Drain live keystrokes first (modifier stays held via hidArmMask), so a key tapped just before
+    // an arm request is delivered ahead of the hold/release/pulse below.
+    while (hidLiveHead != hidLiveTail)
+    {
+      uint8_t key = hidLiveQueue[hidLiveHead];
+      hidLiveHead = (hidLiveHead + 1) % HID_LIVE_QUEUE_LEN;
+
+      fptr(hidArmMask, key, 1);
+      vTaskDelay(inputDelayPeriod);
+      fptr(hidArmMask, key, 0); // mask kept — the modifier stays held
+      vTaskDelay(inputDelayPeriod);
+    }
+
+    // Service a pending arm request: hold the modifier (open menu), release it (close/throw), or
+    // pulse it (release then re-hold to reset the menu after a wrong input).
     if (hidArmRequest != HID_ARM_NONE)
     {
-      fptr(hidArmRequest == HID_ARM_HOLD ? hidArmMask : 0, 0, 0);
+      if (hidArmRequest == HID_ARM_PULSE)
+      {
+        fptr(0, 0, 0);
+        vTaskDelay(inputDelayPeriod);
+        fptr(hidArmMask, 0, 0);
+      }
+      else
+      {
+        fptr(hidArmRequest == HID_ARM_HOLD ? hidArmMask : 0, 0, 0);
+      }
       hidArmRequest = HID_ARM_NONE;
     }
 
     if (stratagemCode[0] > 0)
     {
       uint8_t cmdIndex = 0;
-      double inputDelayPeriod = inputDelay / portTICK_PERIOD_MS;
 
       // Press the modifier (Ctrl) first, then walk the sequence pressing/releasing each key.
       fptr(stratagemMask, 0, 0);

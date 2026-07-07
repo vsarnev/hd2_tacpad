@@ -10,6 +10,7 @@
 #include "stratagems.h"
 #include "i2s_player.h"
 #include "main.h"
+#include "keymaps.h"
 #include "stratagem_names.h"
 #include "esp_random.h"
 #include <string.h>
@@ -1300,9 +1301,13 @@ void manualExecuteDirection(int arrowDirection)
 		if (!manualPrefixValid)
 		{
 			playbackSound(SND_STRAT_ERROR);
-			finalizeManualExecution(); // manualMatch is -1 here, so this only resets (no fire/prime)
+			finalizeManualExecution(); // manualMatch is -1 here, so this only resets (+ pulses the menu)
 			return;
 		}
+
+		// Valid prefix — send THIS keystroke to the host now (Ctrl is held by arm), so the in-game
+		// stratagem menu builds live as you tap. Wrong inputs are caught above and never reach it.
+		hidSendLiveKey(INPUT_CTRL_MASK, LookupKeycode(arrowDirection));
 
 		// Valid prefix — in no-loadout mode show the entered arrows now (loadout mode already
 		// highlighted the matching codes inside mapManualSequence).
@@ -1559,7 +1564,6 @@ void finalizeManualExecution()
 {
 	if (manualMatch >= 0)
 	{
-		uint8_t *sequence;
 		char *soundPath;
 		const lv_img_dsc_t *icon = NULL;
 		const char *name = NULL;
@@ -1568,7 +1572,6 @@ void finalizeManualExecution()
 		{
 			stratagemItem item = strategemItemList[manualMatch];
 
-			sequence = item.sequence;
 			soundPath = item.soundPath;
 			icon = item.imgHiRes;
 			name = strategemItemNames[manualMatch];
@@ -1577,7 +1580,6 @@ void finalizeManualExecution()
 		{
 			stratagemBase item = strategemBaseList[manualMatch];
 
-			sequence = item.sequence;
 			soundPath = item.soundPath;
 			icon = item.imgHiRes;
 			name = strategemBaseNames[manualMatch];
@@ -1587,7 +1589,6 @@ void finalizeManualExecution()
 			const uint8_t itemIndex = indices[manualMatch];
 			const stratagemItem item = strategemItemList[itemIndex];
 
-			sequence = item.sequence;
 			soundPath = item.soundPath;
 			icon = item.imgHiRes;
 			name = strategemItemNames[itemIndex];
@@ -1595,19 +1596,24 @@ void finalizeManualExecution()
 
 		const char *voice = pickVoiceLine(name, soundPath, manualList, manualMatch);
 
-		_executeStdStratagem(sequence, soundPath); // sends the HID code (category sound...)
-		playbackSound(SND_PRIME);                   // ...overridden by the Helldivers "primed" cue
-
+		// The code's keystrokes were already sent to the host live as they were tapped, so here we
+		// only give feedback and release Ctrl — that Ctrl-up throws the stratagem and auto-disarms.
+		playbackSound(SND_PRIME);      // Helldivers "primed" cue
 		showCallIn(icon, name, voice); // full-screen reveal + the queued voice callout
 
-		// Auto-disarm: the sequence burst above ends by releasing Ctrl (that Ctrl-up is the throw),
-		// so just flip the arm UI/state here — do NOT release again (it would race the burst).
 		if (manualArmed)
 		{
+			hidReleaseModifier();
 			manualArmed = false;
 			manualSetArrowsEnabled(false);
 			manualUpdateArmButton();
 		}
+	}
+	else if (manualArmed)
+	{
+		// Reset without a completed code (wrong input or idle timeout): the valid partial already
+		// sent live is still in the in-game menu, so pulse Ctrl to clear it and keep the pad in sync.
+		hidPulseModifier(INPUT_CTRL_MASK);
 	}
 
 	manualMatch = -1;
