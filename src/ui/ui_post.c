@@ -3,8 +3,16 @@
 #include "ui.h"
 #include "ui_events.h"
 #include "version.h"
+#include "configuration.h"
 
 extern lv_obj_t *cooldownLabels[MAX_USER_STRATAGEMS];
+
+// The manual back button (obj71) navigates via EEZ flow with no sound of its own; give it a close cue.
+static void manual_back_sound_cb(lv_event_t *e)
+{
+  (void)e;
+  playbackSound(SND_LOADOUT_CLOSE);
+}
 
 void ui_post()
 {
@@ -47,4 +55,34 @@ void ui_post()
 
   // Update software version in UI
   lv_label_set_text(objects.lbl_version, SW_VER);
+
+  // Make the manual arrow buttons render-free on press: strip the pressed-state style (which dims
+  // the icon to 50% opacity, forcing a full-frame flush on every press AND release). With it gone,
+  // tapping an arrow changes nothing on screen, so rapid stratagem input isn't throttled by the
+  // display flush — each tap is just a sound + a cheap match.
+  lv_obj_remove_style(objects.manual_arrow_up, NULL, LV_PART_MAIN | LV_STATE_PRESSED);
+  lv_obj_remove_style(objects.manual_arrow_down, NULL, LV_PART_MAIN | LV_STATE_PRESSED);
+  lv_obj_remove_style(objects.manual_arrow_left, NULL, LV_PART_MAIN | LV_STATE_PRESSED);
+  lv_obj_remove_style(objects.manual_arrow_right, NULL, LV_PART_MAIN | LV_STATE_PRESSED);
+
+  // Build the loadout/utility view-toggle buttons on the manual screen (bottom, by the back arrow).
+  initManualViewToggle();
+
+  // Build the full-screen "REQUEST RECEIVED" call-in reveal (top layer, shown when a stratagem fires).
+  initCallInScreen();
+
+  // Add a selectable Hellbomb button to the Ground tab (not part of the generated selection UI).
+  initHellbombButton();
+
+  // Add the sound-volume slider to the config screen (not part of the generated UI).
+  initVolumeControl();
+
+  // Stop the manual screen (and the arrows' container) from running scroll-detection on every press.
+  // Nothing there needs to scroll (it all fits), and the scroll interaction was emitting a stray
+  // second click after the tap — the arrow double-click that a time-based debounce couldn't catch.
+  lv_obj_clear_flag(objects.manual, LV_OBJ_FLAG_SCROLLABLE);
+  lv_obj_clear_flag(lv_obj_get_parent(objects.manual_arrow_up), LV_OBJ_FLAG_SCROLLABLE);
+
+  // Give the manual back button its close cue (its flow navigation plays nothing on its own).
+  lv_obj_add_event_cb(objects.obj71, manual_back_sound_cb, LV_EVENT_CLICKED, NULL);
 }

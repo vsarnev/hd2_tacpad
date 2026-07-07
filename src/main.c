@@ -43,6 +43,10 @@ bool soundPlayback = false;
 char *soundFile;
 // Flag for muting sound playback
 bool playerMuted;
+// Set true to abort the currently-playing sound (so a new press's sound starts immediately)
+volatile bool soundInterrupt = false;
+// Software master volume, 0..256 (256 = full). Set from the config slider, applied in the player.
+volatile uint16_t audioVolume = 256;
 
 // Delay for HID input execution in milliseconds (default: 100)
 int inputDelay = 100;
@@ -107,8 +111,9 @@ void setStratagemCode(uint8_t sequence[MAX_CMD_LENGTH], uint8_t mask, bool plain
 // path - path to the sound file
 void playbackSound(char *path)
 {
-  soundPlayback = true;
   soundFile = path;
+  soundInterrupt = true; // cut any sound currently playing so this one starts right away
+  soundPlayback = true;
 }
 
 // Dim the screen to a specific value
@@ -161,7 +166,7 @@ void updateConnection()
 }
 
 // Delay for checking if a the stratagem execution buffer is filled
-#define INPUT_CHECK_DELAY 50
+#define INPUT_CHECK_DELAY 5
 
 // Task for exeuction of HID inputs
 void hid_input_task(void *pvParameters)
@@ -223,16 +228,28 @@ void hid_input_task(void *pvParameters)
       ESP_LOGI(TAG, "Finish command");
     }
 
-    // Check if a sound playback is ongoing
+  }
+}
+
+// Dedicated audio task: plays queued sounds immediately (low latency), and because playbackSound
+// sets soundInterrupt, a new press cuts the current sound so rapid inputs produce rapid beeps.
+void audio_task(void *pvParameters)
+{
+  while (1)
+  {
     if (soundPlayback && lvglReady)
     {
       soundPlayback = false;
+      soundInterrupt = false;
 
-      // Check is playback is not muted
       if (!playerMuted)
       {
         play_wav(soundFile);
       }
+    }
+    else
+    {
+      vTaskDelay(2 / portTICK_PERIOD_MS);
     }
   }
 }
@@ -313,6 +330,9 @@ void app_main()
   // Setup HID input task (async)
   xTaskCreatePinnedToCore(&hid_input_task, "hid_input_task", 2048, NULL, 5, NULL, 0);
 
+  // Dedicated audio task so sound playback never blocks HID sends and fires with minimal latency
+  xTaskCreatePinnedToCore(&audio_task, "audio_task", 4096, NULL, 5, NULL, 1);
+
   // Resolve screen rotation from config
   screenRotation = peekConfig("rotation", LV_DISP_ROT_90);
 
@@ -353,6 +373,13 @@ void app_main()
   loadConfig();
 
   lvglReady = true;
+
+  // Preload the rapid-tap arrow SFX into PSRAM so each press plays instantly (no per-sound SD open,
+  // which was the startup latency that made fast presses feel like they queued up).
+  preload_wav(SND_ARR_UP);
+  preload_wav(SND_ARR_DOWN);
+  preload_wav(SND_ARR_LEFT);
+  preload_wav(SND_ARR_RIGHT);
 
   // Playback intro sound
   playbackSound(SND_INTRO);

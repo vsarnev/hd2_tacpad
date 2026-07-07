@@ -238,8 +238,13 @@ lv_disp_t *lvgl_port_add_disp(const lvgl_port_display_cfg_t *disp_cfg)
 
     disp_ctx->disp_drv.draw_buf = disp_buf;
     disp_ctx->disp_drv.user_data = disp_ctx;
-    /* Force full_fresh */
-    disp_ctx->disp_drv.full_refresh = 1;
+    /* direct_mode: LVGL re-renders only the widgets that changed into the persistent full-screen
+       buffer (far cheaper than full_refresh redrawing the whole screen every frame); the flush
+       then sends the whole framebuffer once per refresh. This QSPI panel can't do partial writes
+       (see memory ui-rendering-perf), so we still send a full frame — but fed by a cheap render.
+       Revert path: set full_refresh=1 and direct_mode=0 (known-good). */
+    disp_ctx->disp_drv.full_refresh = 0;
+    disp_ctx->disp_drv.direct_mode = 1;
 
 #if LVGL_PORT_HANDLE_FLUSH_READY
     /* Register done callback */
@@ -431,10 +436,17 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
     lvgl_port_display_ctx_t *disp_ctx = (lvgl_port_display_ctx_t *)drv->user_data;
     assert(disp_ctx != NULL);
 
-    const int x_start = area->x1;
-    const int x_end = area->x2;
-    const int y_start = area->y1;
-    const int y_end = area->y2;
+    /* direct_mode: only push on the LAST flush of the refresh (the whole framebuffer);
+       `color_map` is the full-screen buffer. */
+    if (!lv_disp_flush_is_last(drv)) {
+        lv_disp_flush_ready(drv);
+        return;
+    }
+
+    const int x_start = 0;
+    const int x_end = drv->hor_res - 1;
+    const int y_start = 0;
+    const int y_end = drv->ver_res - 1;
     const int width = x_end - x_start + 1;
     const int height = y_end - y_start + 1;
 
@@ -500,7 +512,7 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
             case LV_DISP_ROT_90:
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < trans_width; x++) {
-                        *(to + x * height + (height - y - 1)) = *(from + y * width + x_start_tmp + x);
+                        *(to + x * height + (height - y - 1)) = *(from + y * width + (x_start_tmp - x_start) + x);
                     }
                 }
                 x_draw_start = drv->ver_res - y_end - 1;
@@ -511,7 +523,7 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
             case LV_DISP_ROT_270:
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < trans_width; x++) {
-                        *(to + (trans_width - x - 1) * height + y) = *(from + y * width + x_start_tmp + x);
+                        *(to + (trans_width - x - 1) * height + y) = *(from + y * width + (x_start_tmp - x_start) + x);
                     }
                 }
                 x_draw_start = y_start;
@@ -522,7 +534,7 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
             case LV_DISP_ROT_180:
                 for (int y = 0; y < trans_height; y++) {
                     for (int x = 0; x < width; x++) {
-                        *(to + (trans_height - y - 1)*width + (width - x - 1)) = *(from + y_start_tmp * width + y * (width) + x);
+                        *(to + (trans_height - y - 1)*width + (width - x - 1)) = *(from + (y_start_tmp - y_start) * width + y * (width) + x);
                     }
                 }
                 x_draw_start = drv->hor_res - x_end - 1;
@@ -533,7 +545,7 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
             case LV_DISP_ROT_NONE:
                 for (int y = 0; y < trans_height; y++) {
                     for (int x = 0; x < width; x++) {
-                        *(to + y * (width) + x) = *(from + y_start_tmp * width + y * (width) + x);
+                        *(to + y * (width) + x) = *(from + (y_start_tmp - y_start) * width + y * (width) + x);
                     }
                 }
                 x_draw_start = x_start;
@@ -565,6 +577,13 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
                 y_end_tmp -= max_height;
             }
         }
+
+        /* Wait for the final chunk's DMA transfer to complete before returning. Partial
+           refresh calls this flush many times per frame; without this wait the last chunk's
+           transfer is still in flight, and the next flush's give/take consumes its leftover
+           completion signal and starts the next transfer early, clobbering the trans buffer
+           mid-send (garbled / torn / offset / leftover regions). */
+        xSemaphoreTake(disp_ctx->trans_done_sem, portMAX_DELAY);
     } else {
         esp_lcd_panel_draw_bitmap(disp_ctx->panel_handle, x_start, y_start, x_end + 1, y_end + 1, color_map);
     }
@@ -572,9 +591,17 @@ static void lvgl_port_flush_callback(lv_disp_drv_t *drv, const lv_area_t *area, 
 }
 
 #ifdef ESP_LVGL_PORT_TOUCH_COMPONENT
+/* How long to keep reporting a press after the controller reports "released". The AXS15231B is a
+   very bouncy panel: serial-logging the raw touch showed a SINGLE tap emits 6+ rapid DOWN/UP
+   flickers (~10-15 ms apart) over ~80 ms as the finger lands and lifts. We bridge those flickers
+   into one clean press by holding "pressed" until the touch has stayed up this long. The double-
+   click was a flicker-gap exceeding the old (too-narrow) window, splitting one tap into two events.
+   Between SEPARATE taps the finger is up for hundreds of ms (even fast mashing >> this), so a wide
+   window merges the bounce without ever merging real taps. (The FPS monitor used to mask this by
+   throttling the poll rate to ~21 ms and undersampling the flicker; removing it exposed the bounce.) */
+#define TOUCH_RELEASE_DEBOUNCE_MS 45
 static void lvgl_port_touchpad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
 {
-    assert(indev_drv);
     lvgl_port_touch_ctx_t *touch_ctx = (lvgl_port_touch_ctx_t *)indev_drv->user_data;
     assert(touch_ctx->handle);
 
@@ -582,24 +609,35 @@ static void lvgl_port_touchpad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *
     uint16_t touchpad_y[1] = {0};
     uint8_t touchpad_cnt = 0;
 
-    /* Read data from touch controller into memory */
-    bool touch_int = false;
-    if (touch_ctx->touch_wait_cb) {
-        touch_int = touch_ctx->touch_wait_cb(touch_ctx->handle->config.user_data);
-    }
-    if (touch_int) {
-        esp_lcd_touch_read_data(touch_ctx->handle);
-        /* Read data from touch controller */
-        bool touchpad_pressed = esp_lcd_touch_get_coordinates(touch_ctx->handle, touchpad_x, touchpad_y, NULL, &touchpad_cnt, 1);
+    /* Poll the controller directly on every read (no interrupt gating, no caching task). */
+    esp_lcd_touch_read_data(touch_ctx->handle);
+    bool touchpad_pressed = esp_lcd_touch_get_coordinates(touch_ctx->handle, touchpad_x, touchpad_y, NULL, &touchpad_cnt, 1);
 
-        if (touchpad_pressed && touchpad_cnt > 0) {
-            data->point.x = touchpad_x[0];
-            data->point.y = touchpad_y[0];
-            data->state = LV_INDEV_STATE_PRESSED;
-            //esp_rom_printf("Touchpad pressed: x=%d, y=%d\n", data->point.x, data->point.y);
-        } else {
-            data->state = LV_INDEV_STATE_RELEASED;
-        }
+    /* Short release-blip filter: the AXS15231B occasionally drops the touch for a sample or two
+       mid-press (a ~5-11 ms glitch). LVGL would read that as an extra release+press edge and turn
+       it into a phantom double-tap or a hold that keeps re-firing. Bridge only these tiny gaps by
+       continuing to report the last press for up to TOUCH_RELEASE_DEBOUNCE_MS after the controller
+       says "released". A real finger lift lasts far longer, so genuine taps still yield a clean
+       release edge and are never merged — this adds NO rate limit to real input. */
+    static int64_t lastPressedMs = 0;
+    static uint16_t lastX = 0;
+    static uint16_t lastY = 0;
+    int64_t nowMs = esp_timer_get_time() / 1000;
+
+    if (touchpad_pressed && touchpad_cnt > 0) {
+        lastX = touchpad_x[0];
+        lastY = touchpad_y[0];
+        lastPressedMs = nowMs;
+        data->point.x = lastX;
+        data->point.y = lastY;
+        data->state = LV_INDEV_STATE_PRESSED;
+    } else if (nowMs - lastPressedMs < TOUCH_RELEASE_DEBOUNCE_MS) {
+        /* Within the bridge window — hold the last press to ride out a controller glitch. */
+        data->point.x = lastX;
+        data->point.y = lastY;
+        data->state = LV_INDEV_STATE_PRESSED;
+    } else {
+        data->state = LV_INDEV_STATE_RELEASED;
     }
 }
 #endif

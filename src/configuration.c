@@ -5,6 +5,7 @@
 #include <lvgl.h>
 #include "ui/ui.h"
 #include "ui/screens.h"
+#include "ui/styles.h"
 #include "main.h"
 #include "configuration.h"
 
@@ -31,7 +32,14 @@ extern esp_err_t usb_controller_deinit();
 #define CFG_KEY_ROTATION "rotation"
 #define CFG_KEY_BRIGHTNESS "brightness"
 #define CFG_KEY_MUTED "muted"
+#define CFG_KEY_VOLUME "volume"
 #define CFG_KEY_CONNECTIVITY "connectivity"
+
+// Software master volume (0..256), defined in main.c and applied in the audio player.
+extern volatile uint16_t audioVolume;
+// The code-created volume slider + value label (built in initVolumeControl).
+static lv_obj_t *sldVolume = NULL;
+static lv_obj_t *lblVolume = NULL;
 #define CFG_KEY_KEYMAP "keymap"
 #define CFG_KEY_AUTOCOMPLETE "autoComplete"
 #define CFG_KEY_COOLDOWN "showCooldown"
@@ -249,6 +257,87 @@ void setMuted(bool muted, bool restore)
     playbackSound(SND_SWITCH);
 }
 
+// Write the sound volume (0..100 %) to configuration and apply it to the player.
+void setVolume(int volume, bool restore)
+{
+    if (volume < 0)
+    {
+        volume = 0;
+    }
+    if (volume > 100)
+    {
+        volume = 100;
+    }
+
+    audioVolume = (uint16_t)((volume * 256) / 100); // 0..256 for the player
+
+    if (lblVolume != NULL)
+    {
+        char textVolume[8];
+        sprintf(textVolume, "%d %%", volume);
+        lv_label_set_text(lblVolume, textVolume);
+    }
+
+    if (restore)
+    {
+        if (sldVolume != NULL)
+        {
+            lv_slider_set_value(sldVolume, volume, LV_ANIM_OFF);
+        }
+    }
+    else
+    {
+        setConfig(CFG_KEY_VOLUME, volume);
+    }
+}
+
+static void volume_slider_cb(lv_event_t *e)
+{
+    if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED)
+    {
+        setVolume(lv_slider_get_value(lv_event_get_target(e)), false);
+    }
+}
+
+// Build the volume control (title + value + slider) as a new row on the config "Output" tab, next
+// to the mute toggle. Not part of the generated UI, so it's created in code and called from ui_post.
+void initVolumeControl()
+{
+    // The config tab that holds the brightness row (brightness slider -> its row container -> tab).
+    lv_obj_t *tab = lv_obj_get_parent(lv_obj_get_parent(objects.sld_brightness));
+
+    lv_obj_t *row = lv_obj_create(tab);
+    lv_obj_set_size(row, LV_PCT(100), LV_SIZE_CONTENT);
+    lv_obj_set_style_bg_opa(row, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(row, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_radius(row, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_top(row, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_bottom(row, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_left(row, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_right(row, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_row(row, 12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_layout(row, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_flex_flow(row, LV_FLEX_FLOW_ROW_WRAP, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_clear_flag(row, LV_OBJ_FLAG_SCROLLABLE);
+
+    lv_obj_t *title = lv_label_create(row);
+    lv_obj_set_size(title, LV_PCT(50), LV_SIZE_CONTENT);
+    lv_label_set_text_static(title, "Sound volume");
+
+    lblVolume = lv_label_create(row);
+    lv_obj_set_size(lblVolume, LV_PCT(50), LV_SIZE_CONTENT);
+    lv_obj_set_style_text_align(lblVolume, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(lblVolume, lv_color_hex(colorActive), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_label_set_text_static(lblVolume, "100 %");
+
+    sldVolume = lv_slider_create(row);
+    lv_obj_set_size(sldVolume, LV_PCT(100), 12);
+    lv_slider_set_range(sldVolume, 0, 100);
+    lv_slider_set_value(sldVolume, 100, LV_ANIM_OFF);
+    lv_obj_add_event_cb(sldVolume, volume_slider_cb, LV_EVENT_ALL, NULL);
+    add_style_slider_config(sldVolume);
+}
+
 // Write the keymap assignment to configuration
 void setConnectivity(uint8_t index, bool restore)
 {
@@ -460,6 +549,9 @@ void loadConfig()
 
     uint8_t sound_muted = getConfig(CFG_KEY_MUTED, 0);
     setMuted(sound_muted == 1, true);
+
+    uint8_t sound_volume = getConfig(CFG_KEY_VOLUME, 100);
+    setVolume(sound_volume, true);
 
     uint8_t keymap_index = getConfig(CFG_KEY_KEYMAP, 0);
     setKeymap(keymap_index, true);

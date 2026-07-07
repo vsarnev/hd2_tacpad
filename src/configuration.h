@@ -16,6 +16,8 @@ extern "C"
 	void setRotation(int rotation, bool restore);
 	void setBrightness(int brightness, bool restore);
 	void setMuted(bool muted, bool restore);
+	void setVolume(int volume, bool restore);
+	void initVolumeControl();
 	void setConnectivity(uint8_t index, bool restore);
 	void setKeymap(uint8_t index, bool restore);
 	void setAutoComplete(bool enable, bool restore);

@@ -11,6 +11,14 @@
 #include <string.h>
 
 objects_t objects;
+
+static const char *screen_names[] = { "Intro", "Setup", "Preset", "ResetPreset", "Image", "Game", "Mission", "Config", "ResetConfig", "About", "Manual", "Update" };
+static const char *object_names[] = { "intro", "setup", "preset", "reset_preset", "image", "game", "mission", "config", "reset_config", "about", "manual", "update", "img_splash", "cnt_progress", "tab_view_setup", "tab_rifle", "obj0", "weapons_mg", "weapons_hmg", "weapons_sw", "weapons_ac", "obj1", "obj2", "weapons_amr", "weapons_rg", "weapons_lc", "weapons_qc", "weapons_at", "obj3", "weapons_e", "weapons_sg", "weapons_mxg", "weapons_bs", "tab_special", "obj4", "weapons_arl", "weapons_c", "weapons_eat", "weapons_en", "weapons_rr", "obj5", "obj6", "weapons_eatl", "weapons_spr", "weapons_wsp", "weapons_gl", "weapons_bfgl", "obj7", "weapons_de", "weapons_ste", "weapons_ft", "weapons_dt", "weapons_cre", "tab_backpack", "obj8", "backpack_bsb", "backpack_sgp", "backpack_ds", "backpack_gd", "backpack_gdb", "obj9", "obj10", "backpack_gdr", "backpack_gdk", "backpack_gdhd", "backpack_sup", "obj11", "backpack_ph", "backpack_c4_p", "backpack_jp", "backpack_hp", "backpack_wp", "tab_supply", "supply_frv", "supply_frvs", "supply_frvi", "supply_bmk", "supply_otf", "supply_cqc", "obj12", "supply_ss", "supply_pe", "supply_ee", "supply_btes", "supply_les", "obj13", "tab_sentry", "sentry_mgs", "sentry_gs", "sentry_acs", "sentry_hmge", "sentry_ate", "sentry_fs", "obj14", "sentry_ms", "sentry_rs", "sentry_ems", "sentry_ls", "sentry_gms", "obj15", "tab_ground", "obj16", "ground_gm", "ground_tt", "ground_sgr", "ground_apm", "obj17", "ground_atm", "ground_im", "ground_gb", "tab_strike", "strike120", "strike380", "strike_ors", "strike_ogb", "strike_oas", "strike_ol", "strike_ops", "strike_owb", "strike_oes", "strike_onb", "strike_ogs", "strike_oss", "tab_eagle", "obj18", "eagle110", "eagle500", "eagle_a", "eagle_cb", "obj19", "eagle_sr", "eagle_na", "eagle_ss", "obj20", "obj21", "obj22", "bar_amount", "label_amount", "obj23", "obj24", "msg_box", "msg_label", "btn_preset1", "btn_preset2", "btn_preset3", "btn_preset4", "btn_preset5", "btn_preset6", "obj25", "btn_preset_image", "obj26", "obj27", "obj28", "obj29", "obj30", "obj31", "obj32", "obj33", "obj34", "obj35", "obj36", "obj37", "obj38", "obj39", "obj40", "obj41", "obj42", "obj43", "obj44", "obj45", "btn_reinforce", "btn_resupply", "btn_sos", "btn_rearm", "custom_stratagem1", "label_cooldown1", "custom_stratagem2", "label_cooldown2", "custom_stratagem3", "label_cooldown3", "custom_stratagem4", "label_cooldown4", "custom_stratagem5", "label_cooldown5", "custom_stratagem6", "label_cooldown6", "btn_seaf", "btn_hellbomb", "obj46", "obj47", "img_connection2", "btn_sssd", "obj48", "obj49", "btn_ud", "obj50", "obj51", "btn_hbd", "obj52", "obj53", "btn_pd", "obj54", "obj55", "btn_sef", "btn_td", "btn_sp", "btn_oif", "btn_dfv", "btn_cc", "btn_csd", "obj56", "tab_view_config", "obj57", "lbl_brightness", "sld_brightness", "chb_flip", "chb_mute", "lbl_delay", "sld_delay", "dd_connectivity", "img_connection1", "obj58", "dd_keymap", "chb_cooldowns", "chb_ship_mod_srp", "chb_ship_mod_ma", "chb_ship_mod_hc", "chb_ship_mod_zbl", "chb_ship_mod_lvc", "chb_ship_mod_ss", "chb_ship_mod_tsu", "chb_ship_mod_rls", "chb_ship_mod_dt", "chb_auto_complete", "chb_game_after_preset", "obj59", "obj60", "obj61", "obj62", "obj63", "obj64", "obj65", "obj66", "lbl_version", "obj67", "obj68", "obj69", "obj70", "manual_preview_item", "manual_arrow_up", "manual_arrow_left", "manual_arrow_right", "manual_arrow_down", "input_seq", "manual_cmd1", "manual_cmd2", "manual_cmd3", "manual_cmd4", "manual_cmd5", "manual_cmd6", "manual_cmd7", "manual_cmd8", "manual_cmd9", "obj71", "cnt_usr_stg_lst", "cnt_usr_stg_seq1", "seq_ico1", "seq_cmd1_1", "seq_cmd1_2", "seq_cmd1_3", "seq_cmd1_4", "seq_cmd1_5", "seq_cmd1_6", "seq_cmd1_7", "seq_cmd1_8", "seq_cmd1_9", "cnt_usr_stg_seq2", "seq_ico2", "seq_cmd2_1", "seq_cmd2_2", "seq_cmd2_3", "seq_cmd2_4", "seq_cmd2_5", "seq_cmd2_6", "seq_cmd2_7", "seq_cmd2_8", "seq_cmd2_9", "cnt_usr_stg_seq3", "seq_ico3", "seq_cmd3_1", "seq_cmd3_2", "seq_cmd3_3", "seq_cmd3_4", "seq_cmd3_5", "seq_cmd3_6", "seq_cmd3_7", "seq_cmd3_8", "seq_cmd3_9", "cnt_usr_stg_seq4", "seq_ico4", "seq_cmd4_1", "seq_cmd4_2", "seq_cmd4_3", "seq_cmd4_4", "seq_cmd4_5", "seq_cmd4_6", "seq_cmd4_7", "seq_cmd4_8", "seq_cmd4_9", "cnt_usr_stg_seq5", "seq_ico5", "seq_cmd5_1", "seq_cmd5_2", "seq_cmd5_3", "seq_cmd5_4", "seq_cmd5_5", "seq_cmd5_6", "seq_cmd5_7", "seq_cmd5_8", "seq_cmd5_9", "cnt_usr_stg_seq6", "seq_ico6", "seq_cmd6_1", "seq_cmd6_2", "seq_cmd6_3", "seq_cmd6_4", "seq_cmd6_5", "seq_cmd6_6", "seq_cmd6_7", "seq_cmd6_8", "seq_cmd6_9", "obj72" };
+
+//
+// Event handlers
+//
+
 lv_obj_t *tick_value_change_obj;
 
 static void event_handler_cb_intro_intro(lv_event_t *e) {
@@ -40,14 +48,17 @@ static void event_handler_cb_setup_tab_rifle(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -56,14 +67,17 @@ static void event_handler_cb_setup_obj0(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -72,14 +86,17 @@ static void event_handler_cb_setup_weapons_mg(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -88,14 +105,17 @@ static void event_handler_cb_setup_weapons_hmg(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -104,14 +124,17 @@ static void event_handler_cb_setup_weapons_sw(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -120,14 +143,17 @@ static void event_handler_cb_setup_weapons_ac(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -136,14 +162,17 @@ static void event_handler_cb_setup_obj1(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -152,14 +181,17 @@ static void event_handler_cb_setup_obj2(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -168,14 +200,17 @@ static void event_handler_cb_setup_weapons_amr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -184,14 +219,17 @@ static void event_handler_cb_setup_weapons_rg(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -200,14 +238,17 @@ static void event_handler_cb_setup_weapons_lc(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -216,14 +257,17 @@ static void event_handler_cb_setup_weapons_qc(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -232,14 +276,17 @@ static void event_handler_cb_setup_weapons_at(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -248,14 +295,17 @@ static void event_handler_cb_setup_obj3(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -264,14 +314,17 @@ static void event_handler_cb_setup_weapons_e(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -280,14 +333,17 @@ static void event_handler_cb_setup_weapons_sg(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -296,14 +352,17 @@ static void event_handler_cb_setup_weapons_mxg(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -312,14 +371,17 @@ static void event_handler_cb_setup_weapons_bs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -328,14 +390,17 @@ static void event_handler_cb_setup_tab_special(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -344,14 +409,17 @@ static void event_handler_cb_setup_obj4(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -360,14 +428,17 @@ static void event_handler_cb_setup_weapons_arl(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -376,14 +447,17 @@ static void event_handler_cb_setup_weapons_c(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -392,14 +466,17 @@ static void event_handler_cb_setup_weapons_eat(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -408,14 +485,17 @@ static void event_handler_cb_setup_weapons_en(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -424,14 +504,17 @@ static void event_handler_cb_setup_weapons_rr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -440,14 +523,17 @@ static void event_handler_cb_setup_obj5(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -456,14 +542,17 @@ static void event_handler_cb_setup_obj6(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -472,14 +561,17 @@ static void event_handler_cb_setup_weapons_eatl(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -488,14 +580,17 @@ static void event_handler_cb_setup_weapons_spr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -504,14 +599,17 @@ static void event_handler_cb_setup_weapons_wsp(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -520,14 +618,17 @@ static void event_handler_cb_setup_weapons_gl(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -536,14 +637,17 @@ static void event_handler_cb_setup_weapons_bfgl(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -552,14 +656,17 @@ static void event_handler_cb_setup_obj7(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -568,14 +675,17 @@ static void event_handler_cb_setup_weapons_de(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -584,14 +694,17 @@ static void event_handler_cb_setup_weapons_ste(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -600,14 +713,17 @@ static void event_handler_cb_setup_weapons_ft(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -616,14 +732,17 @@ static void event_handler_cb_setup_weapons_dt(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -632,14 +751,17 @@ static void event_handler_cb_setup_weapons_cre(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -648,14 +770,17 @@ static void event_handler_cb_setup_tab_backpack(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -664,14 +789,17 @@ static void event_handler_cb_setup_obj8(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -680,14 +808,17 @@ static void event_handler_cb_setup_backpack_bsb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -696,14 +827,17 @@ static void event_handler_cb_setup_backpack_sgp(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -712,14 +846,17 @@ static void event_handler_cb_setup_backpack_ds(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -728,14 +865,17 @@ static void event_handler_cb_setup_backpack_gd(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -744,14 +884,17 @@ static void event_handler_cb_setup_backpack_gdb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -760,14 +903,17 @@ static void event_handler_cb_setup_obj9(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -776,14 +922,17 @@ static void event_handler_cb_setup_obj10(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -792,14 +941,17 @@ static void event_handler_cb_setup_backpack_gdr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -808,14 +960,17 @@ static void event_handler_cb_setup_backpack_gdk(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -824,14 +979,17 @@ static void event_handler_cb_setup_backpack_gdhd(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -840,14 +998,17 @@ static void event_handler_cb_setup_backpack_sup(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -856,14 +1017,17 @@ static void event_handler_cb_setup_obj11(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -872,14 +1036,17 @@ static void event_handler_cb_setup_backpack_ph(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -888,14 +1055,17 @@ static void event_handler_cb_setup_backpack_c4_p(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -904,14 +1074,17 @@ static void event_handler_cb_setup_backpack_jp(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -920,14 +1093,17 @@ static void event_handler_cb_setup_backpack_hp(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -936,14 +1112,17 @@ static void event_handler_cb_setup_backpack_wp(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -952,14 +1131,17 @@ static void event_handler_cb_setup_tab_supply(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -968,14 +1150,17 @@ static void event_handler_cb_setup_supply_frv(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -984,14 +1169,17 @@ static void event_handler_cb_setup_supply_frvs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1000,14 +1188,17 @@ static void event_handler_cb_setup_supply_frvi(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1016,14 +1207,17 @@ static void event_handler_cb_setup_supply_bmk(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1032,14 +1226,17 @@ static void event_handler_cb_setup_supply_otf(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1048,14 +1245,17 @@ static void event_handler_cb_setup_supply_cqc(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1064,14 +1264,17 @@ static void event_handler_cb_setup_obj12(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1080,14 +1283,17 @@ static void event_handler_cb_setup_supply_ss(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1096,14 +1302,17 @@ static void event_handler_cb_setup_supply_pe(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1112,14 +1321,17 @@ static void event_handler_cb_setup_supply_ee(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1128,14 +1340,17 @@ static void event_handler_cb_setup_supply_btes(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1144,14 +1359,17 @@ static void event_handler_cb_setup_supply_les(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1160,14 +1378,17 @@ static void event_handler_cb_setup_obj13(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1176,14 +1397,17 @@ static void event_handler_cb_setup_tab_sentry(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1192,14 +1416,17 @@ static void event_handler_cb_setup_sentry_mgs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1208,14 +1435,17 @@ static void event_handler_cb_setup_sentry_gs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1224,14 +1454,17 @@ static void event_handler_cb_setup_sentry_acs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1240,14 +1473,17 @@ static void event_handler_cb_setup_sentry_hmge(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1256,14 +1492,17 @@ static void event_handler_cb_setup_sentry_ate(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1272,14 +1511,17 @@ static void event_handler_cb_setup_sentry_fs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1288,14 +1530,17 @@ static void event_handler_cb_setup_obj14(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1304,14 +1549,17 @@ static void event_handler_cb_setup_sentry_ms(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1320,14 +1568,17 @@ static void event_handler_cb_setup_sentry_rs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1336,14 +1587,17 @@ static void event_handler_cb_setup_sentry_ems(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1352,14 +1606,17 @@ static void event_handler_cb_setup_sentry_ls(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1368,14 +1625,17 @@ static void event_handler_cb_setup_sentry_gms(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1384,14 +1644,17 @@ static void event_handler_cb_setup_obj15(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1400,14 +1663,17 @@ static void event_handler_cb_setup_tab_ground(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1416,14 +1682,17 @@ static void event_handler_cb_setup_obj16(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1432,14 +1701,17 @@ static void event_handler_cb_setup_ground_gm(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1448,14 +1720,17 @@ static void event_handler_cb_setup_ground_tt(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1464,14 +1739,17 @@ static void event_handler_cb_setup_ground_sgr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1480,14 +1758,17 @@ static void event_handler_cb_setup_ground_apm(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1496,14 +1777,17 @@ static void event_handler_cb_setup_obj17(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1512,14 +1796,17 @@ static void event_handler_cb_setup_ground_atm(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1528,14 +1815,17 @@ static void event_handler_cb_setup_ground_im(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1544,14 +1834,17 @@ static void event_handler_cb_setup_ground_gb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1560,14 +1853,17 @@ static void event_handler_cb_setup_tab_strike(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1576,14 +1872,17 @@ static void event_handler_cb_setup_strike120(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1592,14 +1891,17 @@ static void event_handler_cb_setup_strike380(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1608,14 +1910,17 @@ static void event_handler_cb_setup_strike_ors(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1624,14 +1929,17 @@ static void event_handler_cb_setup_strike_ogb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1640,14 +1948,17 @@ static void event_handler_cb_setup_strike_oas(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1656,14 +1967,17 @@ static void event_handler_cb_setup_strike_ol(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1672,14 +1986,17 @@ static void event_handler_cb_setup_strike_ops(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1688,14 +2005,17 @@ static void event_handler_cb_setup_strike_owb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1704,14 +2024,17 @@ static void event_handler_cb_setup_strike_oes(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1720,14 +2043,17 @@ static void event_handler_cb_setup_strike_onb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1736,14 +2062,17 @@ static void event_handler_cb_setup_strike_ogs(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1752,14 +2081,17 @@ static void event_handler_cb_setup_strike_oss(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1768,14 +2100,17 @@ static void event_handler_cb_setup_tab_eagle(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1784,14 +2119,17 @@ static void event_handler_cb_setup_obj18(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1800,14 +2138,17 @@ static void event_handler_cb_setup_eagle110(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1816,14 +2157,17 @@ static void event_handler_cb_setup_eagle500(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1832,14 +2176,17 @@ static void event_handler_cb_setup_eagle_a(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1848,14 +2195,17 @@ static void event_handler_cb_setup_eagle_cb(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1864,14 +2214,17 @@ static void event_handler_cb_setup_obj19(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1880,14 +2233,17 @@ static void event_handler_cb_setup_eagle_sr(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1896,14 +2252,17 @@ static void event_handler_cb_setup_eagle_na(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -1912,14 +2271,17 @@ static void event_handler_cb_setup_eagle_ss(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_select_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_select_stratagem(e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        action_deselect_stratagem(e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            action_deselect_stratagem(e);
+        }
     }
 }
 
@@ -2084,14 +2446,17 @@ static void event_handler_cb_preset_btn_preset_image(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    lv_obj_t *ta = lv_event_get_target(e);
-    if (event == LV_EVENT_VALUE_CHANGED && lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, 10, 0, e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            flowPropagateValueLVGLEvent(flowState, 10, 0, e);
+        }
     }
-    if (event == LV_EVENT_VALUE_CHANGED && !lv_obj_has_state(ta, LV_STATE_CHECKED)) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, 10, 1, e);
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        if (!lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED)) {
+            e->user_data = (void *)0;
+            flowPropagateValueLVGLEvent(flowState, 10, 1, e);
+        }
     }
 }
 
@@ -2618,7 +2983,7 @@ static void event_handler_cb_mission_btn_csd(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_mission_obj48(lv_event_t *e) {
+static void event_handler_cb_mission_obj56(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2695,7 +3060,7 @@ static void event_handler_cb_config_dd_connectivity(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj49(lv_event_t *e) {
+static void event_handler_cb_config_obj58(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2849,7 +3214,7 @@ static void event_handler_cb_config_chb_game_after_preset(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj50(lv_event_t *e) {
+static void event_handler_cb_config_obj59(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2860,7 +3225,7 @@ static void event_handler_cb_config_obj50(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj51(lv_event_t *e) {
+static void event_handler_cb_config_obj60(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2871,7 +3236,7 @@ static void event_handler_cb_config_obj51(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj52(lv_event_t *e) {
+static void event_handler_cb_config_obj61(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2882,7 +3247,7 @@ static void event_handler_cb_config_obj52(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj53(lv_event_t *e) {
+static void event_handler_cb_config_obj62(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2893,7 +3258,7 @@ static void event_handler_cb_config_obj53(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_config_obj54(lv_event_t *e) {
+static void event_handler_cb_config_obj63(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2904,7 +3269,7 @@ static void event_handler_cb_config_obj54(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_reset_config_obj55(lv_event_t *e) {
+static void event_handler_cb_reset_config_obj64(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2915,7 +3280,7 @@ static void event_handler_cb_reset_config_obj55(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_reset_config_obj56(lv_event_t *e) {
+static void event_handler_cb_reset_config_obj65(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2926,7 +3291,7 @@ static void event_handler_cb_reset_config_obj56(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_about_obj57(lv_event_t *e) {
+static void event_handler_cb_about_obj70(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2942,7 +3307,7 @@ static void event_handler_cb_manual_manual_arrow_up(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    if (event == LV_EVENT_PRESSED) {
+    if (event == LV_EVENT_CLICKED) {
         e->user_data = (void *)1;
         action_manual_execute(e);
     }
@@ -2953,7 +3318,7 @@ static void event_handler_cb_manual_manual_arrow_left(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    if (event == LV_EVENT_PRESSED) {
+    if (event == LV_EVENT_CLICKED) {
         e->user_data = (void *)3;
         action_manual_execute(e);
     }
@@ -2964,7 +3329,7 @@ static void event_handler_cb_manual_manual_arrow_right(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    if (event == LV_EVENT_PRESSED) {
+    if (event == LV_EVENT_CLICKED) {
         e->user_data = (void *)4;
         action_manual_execute(e);
     }
@@ -2975,13 +3340,13 @@ static void event_handler_cb_manual_manual_arrow_down(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
-    if (event == LV_EVENT_PRESSED) {
+    if (event == LV_EVENT_CLICKED) {
         e->user_data = (void *)2;
         action_manual_execute(e);
     }
 }
 
-static void event_handler_cb_manual_obj58(lv_event_t *e) {
+static void event_handler_cb_manual_obj71(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -2992,7 +3357,7 @@ static void event_handler_cb_manual_obj58(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_update_obj59(lv_event_t *e) {
+static void event_handler_cb_update_obj72(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -3003,6 +3368,10 @@ static void event_handler_cb_update_obj59(lv_event_t *e) {
     }
 }
 
+//
+// Screens
+//
+
 void create_screen_intro() {
     void *flowState = getFlowState(0, 0);
     (void)flowState;
@@ -3011,7 +3380,7 @@ void create_screen_intro() {
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
     lv_obj_add_event_cb(obj, event_handler_cb_intro_intro, LV_EVENT_ALL, flowState);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -3036,7 +3405,7 @@ void create_screen_intro() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff8eb2b8), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0x8eb2b8), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
@@ -3057,7 +3426,7 @@ void create_screen_setup() {
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -3068,7 +3437,7 @@ void create_screen_setup() {
             lv_obj_set_size(obj, LV_PCT(100), 280);
             lv_obj_add_event_cb(obj, event_handler_cb_setup_tab_view_setup, LV_EVENT_ALL, flowState);
             lv_obj_set_style_text_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -4621,9 +4990,9 @@ void create_screen_setup() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_PCT(100), 8);
                             lv_bar_set_range(obj, 0, 6);
-                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffffffff), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffffff), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                             lv_obj_set_style_radius(obj, 2, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_bg_opa(obj, 63, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_radius(obj, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
                         }
@@ -4634,7 +5003,7 @@ void create_screen_setup() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
                             lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_label_set_text(obj, "0 / 6");
+                            lv_label_set_text_static(obj, "0 / 6");
                         }
                     }
                 }
@@ -4668,7 +5037,7 @@ void create_screen_setup() {
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_CLICK_FOCUSABLE);
             lv_obj_set_style_radius(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff282b30), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0x282b30), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 223, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4686,7 +5055,7 @@ void create_screen_setup() {
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Msg\nBox");
+                    lv_label_set_text_static(obj, "Msg\nBox");
                 }
             }
         }
@@ -4707,7 +5076,7 @@ void create_screen_preset() {
     objects.preset = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -4866,7 +5235,7 @@ void create_screen_reset_preset() {
     objects.reset_preset = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -4898,7 +5267,7 @@ void create_screen_reset_preset() {
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Delete all presets?");
+                    lv_label_set_text_static(obj, "Delete all presets?");
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
@@ -4939,7 +5308,7 @@ void create_screen_image() {
     objects.image = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -5137,7 +5506,7 @@ void create_screen_game() {
     objects.game = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -5224,7 +5593,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5249,7 +5618,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5274,7 +5643,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5299,7 +5668,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5347,7 +5716,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5372,7 +5741,7 @@ void create_screen_game() {
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             add_style_label_cooldown(obj);
-                            lv_label_set_text(obj, "0:00");
+                            lv_label_set_text_static(obj, "0:00");
                         }
                     }
                 }
@@ -5446,7 +5815,7 @@ void create_screen_mission() {
     objects.mission = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -5509,23 +5878,23 @@ void create_screen_mission() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj60 = obj;
+                                    objects.obj48 = obj;
                                     lv_obj_set_pos(obj, 201, 20);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "SSSD");
+                                    lv_label_set_text_static(obj, "SSSD");
                                 }
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj61 = obj;
+                                    objects.obj49 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Delivery");
+                                    lv_label_set_text_static(obj, "Delivery");
                                 }
                             }
                         }
@@ -5570,23 +5939,23 @@ void create_screen_mission() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj62 = obj;
+                                    objects.obj50 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Upload");
+                                    lv_label_set_text_static(obj, "Upload");
                                 }
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj63 = obj;
+                                    objects.obj51 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Data");
+                                    lv_label_set_text_static(obj, "Data");
                                 }
                             }
                         }
@@ -5631,23 +6000,23 @@ void create_screen_mission() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj64 = obj;
+                                    objects.obj52 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Hive Br.");
+                                    lv_label_set_text_static(obj, "Hive Br.");
                                 }
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj65 = obj;
+                                    objects.obj53 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Drill");
+                                    lv_label_set_text_static(obj, "Drill");
                                 }
                             }
                         }
@@ -5692,23 +6061,23 @@ void create_screen_mission() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj66 = obj;
+                                    objects.obj54 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Prosp.");
+                                    lv_label_set_text_static(obj, "Prosp.");
                                 }
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj67 = obj;
+                                    objects.obj55 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_opa(obj, 191, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Drill");
+                                    lv_label_set_text_static(obj, "Drill");
                                 }
                             }
                         }
@@ -5959,10 +6328,10 @@ void create_screen_mission() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj48 = obj;
+            objects.obj56 = obj;
             lv_obj_set_pos(obj, -2, -2);
             lv_obj_set_size(obj, 76, 38);
-            lv_obj_add_event_cb(obj, event_handler_cb_mission_obj48, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_mission_obj56, LV_EVENT_ALL, flowState);
             add_style_button_std(obj);
             lv_obj_set_style_align(obj, LV_ALIGN_BOTTOM_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_img_src(obj, &img_icon_back, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5985,7 +6354,7 @@ void create_screen_config() {
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -5995,14 +6364,14 @@ void create_screen_config() {
             lv_obj_set_pos(obj, 0, 0);
             lv_obj_set_size(obj, LV_PCT(100), 280);
             lv_obj_add_event_cb(obj, event_handler_cb_config_tab_view_config, LV_EVENT_ALL, flowState);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_tabview_add_tab(parent_obj, "Display / Audio");
-                    objects.obj68 = obj;
+                    objects.obj57 = obj;
                     add_style_tab_config(obj);
-                    lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_START, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_pad_row(obj, 16, LV_PART_MAIN | LV_STATE_DEFAULT);
                     {
@@ -6029,7 +6398,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(50), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Screen brightness");
+                                    lv_label_set_text_static(obj, "Screen brightness");
                                 }
                                 {
                                     // LblBrightness
@@ -6039,7 +6408,7 @@ void create_screen_config() {
                                     lv_obj_set_size(obj, LV_PCT(50), LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "100 %");
+                                    lv_label_set_text_static(obj, "100 %");
                                 }
                                 {
                                     // SldBrightness
@@ -6075,7 +6444,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Flip screen 180°");
+                                    lv_label_set_text_static(obj, "Flip screen 180°");
                                 }
                                 {
                                     // ChbFlip
@@ -6110,7 +6479,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Sound mute");
+                                    lv_label_set_text_static(obj, "Sound mute");
                                 }
                                 {
                                     // ChbMute
@@ -6153,7 +6522,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(50), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Delay");
+                                    lv_label_set_text_static(obj, "Delay");
                                 }
                                 {
                                     // LblDelay
@@ -6163,8 +6532,8 @@ void create_screen_config() {
                                     lv_obj_set_size(obj, LV_PCT(50), LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffdf00), LV_PART_MAIN | LV_STATE_CHECKED);
-                                    lv_label_set_text(obj, "100 ms");
+                                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffdf00), LV_PART_MAIN | LV_STATE_CHECKED);
+                                    lv_label_set_text_static(obj, "100 ms");
                                 }
                                 {
                                     // SldDelay
@@ -6200,7 +6569,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Connectivity");
+                                    lv_label_set_text_static(obj, "Connectivity");
                                 }
                                 {
                                     // DdConnectivity
@@ -6208,7 +6577,7 @@ void create_screen_config() {
                                     objects.dd_connectivity = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), 38);
-                                    lv_dropdown_set_options(obj, "Bluetooth\nUSB");
+                                    lv_dropdown_set_options_static(obj, "Bluetooth\nUSB");
                                     lv_dropdown_set_selected(obj, 0);
                                     lv_obj_add_event_cb(obj, event_handler_cb_config_dd_connectivity, LV_EVENT_ALL, flowState);
                                     add_style_dropdown_config(obj);
@@ -6223,10 +6592,10 @@ void create_screen_config() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                                    objects.obj49 = obj;
+                                    objects.obj58 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, 38);
-                                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj49, LV_EVENT_ALL, flowState);
+                                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj58, LV_EVENT_ALL, flowState);
                                     add_style_button_std(obj);
                                     {
                                         lv_obj_t *parent_obj = obj;
@@ -6235,7 +6604,7 @@ void create_screen_config() {
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                            lv_label_set_text(obj, "Send \"hello\"");
+                                            lv_label_set_text_static(obj, "Send \"hello\"");
                                         }
                                     }
                                 }
@@ -6262,7 +6631,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Keymap");
+                                    lv_label_set_text_static(obj, "Keymap");
                                 }
                                 {
                                     // DdKeymap
@@ -6270,7 +6639,7 @@ void create_screen_config() {
                                     objects.dd_keymap = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(100), 38);
-                                    lv_dropdown_set_options(obj, "WASD\nArrows");
+                                    lv_dropdown_set_options_static(obj, "WASD\nArrows");
                                     lv_dropdown_set_selected(obj, 0);
                                     lv_obj_add_event_cb(obj, event_handler_cb_config_dd_keymap, LV_EVENT_ALL, flowState);
                                     add_style_dropdown_config(obj);
@@ -6306,7 +6675,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(92), LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Show timers");
+                                    lv_label_set_text_static(obj, "Show timers");
                                 }
                                 {
                                     // ChbCooldowns
@@ -6342,7 +6711,7 @@ void create_screen_config() {
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_BOTTOM_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "Ship modules");
+                                    lv_label_set_text_static(obj, "Ship modules");
                                 }
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -6368,7 +6737,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_srp = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Streaml. Req. Process");
+                                            lv_checkbox_set_text_static(obj, "Streaml. Req. Process");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_srp, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6378,7 +6747,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_ma = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Morale Augmentation");
+                                            lv_checkbox_set_text_static(obj, "Morale Augmentation");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_ma, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6388,7 +6757,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_hc = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Hand Carts");
+                                            lv_checkbox_set_text_static(obj, "Hand Carts");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_hc, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6398,7 +6767,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_zbl = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Zero-G Breech Load.");
+                                            lv_checkbox_set_text_static(obj, "Zero-G Breech Load.");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_zbl, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6408,7 +6777,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_lvc = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Liquid-Vent. Cockpit");
+                                            lv_checkbox_set_text_static(obj, "Liquid-Vent. Cockpit");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_lvc, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6418,7 +6787,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_ss = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Synthetic Suppl.");
+                                            lv_checkbox_set_text_static(obj, "Synthetic Suppl.");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_ss, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6428,7 +6797,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_tsu = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Hand Carts");
+                                            lv_checkbox_set_text_static(obj, "Hand Carts");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_tsu, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6438,7 +6807,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_rls = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Rapid launch system");
+                                            lv_checkbox_set_text_static(obj, "Rapid launch system");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_rls, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6448,7 +6817,7 @@ void create_screen_config() {
                                             objects.chb_ship_mod_dt = obj;
                                             lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Dyn. Tracking");
+                                            lv_checkbox_set_text_static(obj, "Dyn. Tracking");
                                             lv_obj_add_event_cb(obj, event_handler_cb_config_chb_ship_mod_dt, LV_EVENT_ALL, flowState);
                                             add_style_checkbox_config(obj);
                                         }
@@ -6487,7 +6856,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Auto-complete for manual");
+                                    lv_label_set_text_static(obj, "Auto-complete for manual");
                                 }
                                 {
                                     // ChbAutoComplete
@@ -6522,7 +6891,7 @@ void create_screen_config() {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Goto game screen after preset selection");
+                                    lv_label_set_text_static(obj, "Goto game screen after preset selection");
                                 }
                                 {
                                     // ChbGameAfterPreset
@@ -6558,19 +6927,19 @@ void create_screen_config() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj50 = obj;
+                    objects.obj59 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, LV_PCT(100));
-                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj50, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj59, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_back, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj51 = obj;
+                    objects.obj60 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, LV_PCT(100));
-                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj51, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj60, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_info, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
@@ -6595,28 +6964,28 @@ void create_screen_config() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj52 = obj;
+                    objects.obj61 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, LV_PCT(100));
-                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj52, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj61, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_update, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj53 = obj;
+                    objects.obj62 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, LV_PCT(100));
-                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj53, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj62, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_reset, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj54 = obj;
+                    objects.obj63 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, LV_PCT(100));
-                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj54, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_config_obj63, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_restart, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
@@ -6639,7 +7008,7 @@ void create_screen_reset_config() {
     objects.reset_config = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -6671,24 +7040,24 @@ void create_screen_reset_config() {
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Reset device to\ndefault settings?");
+                    lv_label_set_text_static(obj, "Reset device to\ndefault settings?");
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj55 = obj;
+                    objects.obj64 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, 38);
-                    lv_obj_add_event_cb(obj, event_handler_cb_reset_config_obj55, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_reset_config_obj64, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_border_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_yes, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj56 = obj;
+                    objects.obj65 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 76, 38);
-                    lv_obj_add_event_cb(obj, event_handler_cb_reset_config_obj56, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_reset_config_obj65, LV_EVENT_ALL, flowState);
                     add_style_button_std(obj);
                     lv_obj_set_style_border_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_img_src(obj, &img_icon_no, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6712,7 +7081,7 @@ void create_screen_about() {
     objects.about = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_img_opa(obj, 31, LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
@@ -6736,12 +7105,12 @@ void create_screen_about() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj69 = obj;
+                    objects.obj66 = obj;
                     lv_obj_set_pos(obj, 8, 8);
                     lv_obj_set_size(obj, LV_PCT(49), LV_SIZE_CONTENT);
                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "HD2 Macropad");
+                    lv_label_set_text_static(obj, "HD2 Macropad");
                 }
                 {
                     // LblVersion
@@ -6752,8 +7121,8 @@ void create_screen_about() {
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_align(obj, LV_ALIGN_TOP_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff666666), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "vX.X.X");
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0x666666), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "vX.X.X");
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -6769,11 +7138,11 @@ void create_screen_about() {
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj70 = obj;
+                    objects.obj67 = obj;
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff999999), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Copyright (C) 2024 - 2026 All rights reserved.");
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0x999999), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "Copyright (C) 2024 - 2026 All rights reserved.");
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -6791,7 +7160,7 @@ void create_screen_about() {
                     lv_obj_t *obj = lv_label_create(parent_obj);
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "This software is released under the Creative Commons Attribution-NonCommercial 4.0 International Public License.");
+                    lv_label_set_text_static(obj, "This software is released under the Creative Commons Attribution-NonCommercial 4.0 International Public License.");
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -6809,15 +7178,15 @@ void create_screen_about() {
                     lv_obj_t *obj = lv_label_create(parent_obj);
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "For more information please visit:");
+                    lv_label_set_text_static(obj, "For more information please visit:");
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj71 = obj;
+                    objects.obj68 = obj;
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "github.com/unic8s/hd2_macropad");
+                    lv_label_set_text_static(obj, "github.com/unic8s/hd2_macropad");
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -6836,31 +7205,31 @@ void create_screen_about() {
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "A project by");
+                    lv_label_set_text_static(obj, "A project by");
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj72 = obj;
+                    objects.obj69 = obj;
                     lv_obj_set_pos(obj, 54, 113);
                     lv_obj_set_size(obj, LV_PCT(100), LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_color(obj, lv_color_hex(theme_colors[eez_flow_get_selected_theme_index()][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Oliver G.\t@Gore66\nErik L.\t\t\t@unic8s");
+                    lv_label_set_text_static(obj, "Oliver G.\t@Gore66\nErik L.\t\t\t@unic8s");
                 }
             }
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj57 = obj;
+            objects.obj70 = obj;
             lv_obj_set_pos(obj, 2, -2);
             lv_obj_set_size(obj, 76, 38);
-            lv_obj_add_event_cb(obj, event_handler_cb_about_obj57, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_about_obj70, LV_EVENT_ALL, flowState);
             add_style_button_std(obj);
             lv_obj_set_style_bg_img_src(obj, &img_icon_back, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_align(obj, LV_ALIGN_BOTTOM_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
-            lv_obj_t *obj = lv_qrcode_create(parent_obj, 152, lv_color_hex(0xff000000), lv_color_hex(0xffe2f5fe));
+            lv_obj_t *obj = lv_qrcode_create(parent_obj, 152, lv_color_hex(0x000000), lv_color_hex(0xe2f5fe));
             lv_obj_set_pos(obj, -12, -12);
             lv_obj_set_size(obj, 152, 152);
             lv_qrcode_update(obj, "https://s.click.aliexpress.com/e/_DneMCLR", 41);
@@ -6884,7 +7253,7 @@ void create_screen_manual() {
     objects.manual = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -6902,7 +7271,7 @@ void create_screen_manual() {
             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_set_style_align(obj, LV_ALIGN_LEFT_MID, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_border_color(obj, lv_color_hex(0xff333333), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_color(obj, lv_color_hex(0x333333), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -7120,10 +7489,10 @@ void create_screen_manual() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj58 = obj;
+            objects.obj71 = obj;
             lv_obj_set_pos(obj, -2, -2);
             lv_obj_set_size(obj, 76, 38);
-            lv_obj_add_event_cb(obj, event_handler_cb_manual_obj58, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_manual_obj71, LV_EVENT_ALL, flowState);
             add_style_button_std(obj);
             lv_obj_set_style_align(obj, LV_ALIGN_BOTTOM_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_img_src(obj, &img_icon_back, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7831,7 +8200,7 @@ void create_screen_update() {
     objects.update = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
-    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
         {
@@ -7863,16 +8232,16 @@ void create_screen_update() {
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Device is ready for\nfirmware upload.\n\nPlease proceed.");
+                    lv_label_set_text_static(obj, "Device is ready for\nfirmware upload.\n\nPlease proceed.");
                 }
             }
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj59 = obj;
+            objects.obj72 = obj;
             lv_obj_set_pos(obj, 2, -2);
             lv_obj_set_size(obj, 76, 38);
-            lv_obj_add_event_cb(obj, event_handler_cb_update_obj59, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_update_obj72, LV_EVENT_ALL, flowState);
             add_style_button_std(obj);
             lv_obj_set_style_align(obj, LV_ALIGN_BOTTOM_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_img_src(obj, &img_icon_back, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7886,294 +8255,6 @@ void tick_screen_update() {
     void *flowState = getFlowState(0, 11);
     (void)flowState;
 }
-
-void change_color_theme(uint32_t theme_index) {
-    lv_style_set_border_color(get_style_button_std_MAIN_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_style_set_bg_color(get_style_slider_config_INDICATOR_DEFAULT(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_style_set_bg_color(get_style_slider_config_KNOB_DEFAULT(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_style_set_border_color(get_style_switch_config_MAIN_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_style_set_bg_color(get_style_switch_config_KNOB_DEFAULT(), lv_color_hex(theme_colors[theme_index][0]));
-    
-    lv_style_set_bg_color(get_style_switch_config_KNOB_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_style_set_text_color(get_style_checkbox_config_INDICATOR_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
-    
-    lv_obj_set_style_border_color(objects.weapons_mg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_hmg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_sw, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_ac, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_amr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_rg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_lc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_qc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_at, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_e, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_sg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_mxg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_bs, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_arl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_c, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_eat, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_en, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_rr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_eatl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_spr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_wsp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_gl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_bfgl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_de, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_ste, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_ft, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_dt, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.weapons_cre, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_bsb, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_sgp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_ds, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_gd, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_gdb, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_gdr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_gdk, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_gdhd, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_sup, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_ph, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_c4_p, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_jp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_hp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.backpack_wp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_frv, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_frvs, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_frvi, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_bmk, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_otf, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_cqc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_ss, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_pe, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_ee, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_btes, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.supply_les, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_mgs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_gs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_acs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_hmge, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_ate, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_fs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_ms, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_rs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_ems, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_ls, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.sentry_gms, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_gm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_tt, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_sgr, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_apm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_atm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_im, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.ground_gb, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike120, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike380, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_ors, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_ogb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_oas, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_ol, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_ops, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_owb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_oes, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_onb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_ogs, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.strike_oss, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle110, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle500, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle_a, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle_cb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle_sr, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle_na, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.eagle_ss, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.msg_label, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset1, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset2, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset3, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset4, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset5, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_preset6, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.obj27, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.obj28, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_reinforce, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_resupply, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_sos, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_rearm, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_seaf, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_hellbomb, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_sssd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_ud, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_hbd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_pd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_sef, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_td, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_sp, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_oif, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_dfv, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_cc, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.btn_csd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.lbl_brightness, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.lbl_delay, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.obj55, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_border_color(objects.obj56, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.obj69, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.obj71, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_set_style_text_color(objects.obj72, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
-    
-    lv_obj_invalidate(objects.intro);
-    lv_obj_invalidate(objects.setup);
-    lv_obj_invalidate(objects.preset);
-    lv_obj_invalidate(objects.reset_preset);
-    lv_obj_invalidate(objects.image);
-    lv_obj_invalidate(objects.game);
-    lv_obj_invalidate(objects.mission);
-    lv_obj_invalidate(objects.config);
-    lv_obj_invalidate(objects.reset_config);
-    lv_obj_invalidate(objects.about);
-    lv_obj_invalidate(objects.manual);
-    lv_obj_invalidate(objects.update);
-}
-
-extern void add_style(lv_obj_t *obj, int32_t styleIndex);
-extern void remove_style(lv_obj_t *obj, int32_t styleIndex);
-
-static const char *screen_names[] = { "Intro", "Setup", "Preset", "ResetPreset", "Image", "Game", "Mission", "Config", "ResetConfig", "About", "Manual", "Update" };
-static const char *object_names[] = { "intro", "setup", "preset", "reset_preset", "image", "game", "mission", "config", "reset_config", "about", "manual", "update", "tab_view_setup", "tab_rifle", "obj0", "weapons_mg", "weapons_hmg", "weapons_sw", "weapons_ac", "obj1", "obj2", "weapons_amr", "weapons_rg", "weapons_lc", "weapons_qc", "weapons_at", "obj3", "weapons_e", "weapons_sg", "weapons_mxg", "weapons_bs", "tab_special", "obj4", "weapons_arl", "weapons_c", "weapons_eat", "weapons_en", "weapons_rr", "obj5", "obj6", "weapons_eatl", "weapons_spr", "weapons_wsp", "weapons_gl", "weapons_bfgl", "obj7", "weapons_de", "weapons_ste", "weapons_ft", "weapons_dt", "weapons_cre", "tab_backpack", "obj8", "backpack_bsb", "backpack_sgp", "backpack_ds", "backpack_gd", "backpack_gdb", "obj9", "obj10", "backpack_gdr", "backpack_gdk", "backpack_gdhd", "backpack_sup", "obj11", "backpack_ph", "backpack_c4_p", "backpack_jp", "backpack_hp", "backpack_wp", "tab_supply", "supply_frv", "supply_frvs", "supply_frvi", "supply_bmk", "supply_otf", "supply_cqc", "obj12", "supply_ss", "supply_pe", "supply_ee", "supply_btes", "supply_les", "obj13", "tab_sentry", "sentry_mgs", "sentry_gs", "sentry_acs", "sentry_hmge", "sentry_ate", "sentry_fs", "obj14", "sentry_ms", "sentry_rs", "sentry_ems", "sentry_ls", "sentry_gms", "obj15", "tab_ground", "obj16", "ground_gm", "ground_tt", "ground_sgr", "ground_apm", "obj17", "ground_atm", "ground_im", "ground_gb", "tab_strike", "strike120", "strike380", "strike_ors", "strike_ogb", "strike_oas", "strike_ol", "strike_ops", "strike_owb", "strike_oes", "strike_onb", "strike_ogs", "strike_oss", "tab_eagle", "obj18", "eagle110", "eagle500", "eagle_a", "eagle_cb", "obj19", "eagle_sr", "eagle_na", "eagle_ss", "obj20", "obj21", "obj22", "obj23", "obj24", "btn_preset1", "btn_preset2", "btn_preset3", "btn_preset4", "btn_preset5", "btn_preset6", "obj25", "btn_preset_image", "obj26", "obj27", "obj28", "obj29", "obj30", "obj31", "obj32", "obj33", "obj34", "obj35", "obj36", "obj37", "obj38", "obj39", "obj40", "obj41", "obj42", "obj43", "obj44", "obj45", "btn_reinforce", "btn_resupply", "btn_sos", "btn_rearm", "custom_stratagem1", "custom_stratagem2", "custom_stratagem3", "custom_stratagem4", "custom_stratagem5", "custom_stratagem6", "btn_seaf", "btn_hellbomb", "obj46", "obj47", "btn_sssd", "btn_ud", "btn_hbd", "btn_pd", "btn_sef", "btn_td", "btn_sp", "btn_oif", "btn_dfv", "btn_cc", "btn_csd", "obj48", "tab_view_config", "sld_brightness", "chb_flip", "chb_mute", "sld_delay", "dd_connectivity", "obj49", "dd_keymap", "chb_cooldowns", "chb_ship_mod_srp", "chb_ship_mod_ma", "chb_ship_mod_hc", "chb_ship_mod_zbl", "chb_ship_mod_lvc", "chb_ship_mod_ss", "chb_ship_mod_tsu", "chb_ship_mod_rls", "chb_ship_mod_dt", "chb_auto_complete", "chb_game_after_preset", "obj50", "obj51", "obj52", "obj53", "obj54", "obj55", "obj56", "obj57", "manual_arrow_up", "manual_arrow_left", "manual_arrow_right", "manual_arrow_down", "obj58", "obj59", "img_splash", "cnt_progress", "bar_amount", "label_amount", "msg_box", "msg_label", "label_cooldown1", "label_cooldown2", "label_cooldown3", "label_cooldown4", "label_cooldown5", "label_cooldown6", "img_connection2", "obj60", "obj61", "obj62", "obj63", "obj64", "obj65", "obj66", "obj67", "obj68", "lbl_brightness", "lbl_delay", "img_connection1", "obj69", "lbl_version", "obj70", "obj71", "obj72", "manual_preview_item", "input_seq", "manual_cmd1", "manual_cmd2", "manual_cmd3", "manual_cmd4", "manual_cmd5", "manual_cmd6", "manual_cmd7", "manual_cmd8", "manual_cmd9", "cnt_usr_stg_lst", "cnt_usr_stg_seq1", "seq_ico1", "seq_cmd1_1", "seq_cmd1_2", "seq_cmd1_3", "seq_cmd1_4", "seq_cmd1_5", "seq_cmd1_6", "seq_cmd1_7", "seq_cmd1_8", "seq_cmd1_9", "cnt_usr_stg_seq2", "seq_ico2", "seq_cmd2_1", "seq_cmd2_2", "seq_cmd2_3", "seq_cmd2_4", "seq_cmd2_5", "seq_cmd2_6", "seq_cmd2_7", "seq_cmd2_8", "seq_cmd2_9", "cnt_usr_stg_seq3", "seq_ico3", "seq_cmd3_1", "seq_cmd3_2", "seq_cmd3_3", "seq_cmd3_4", "seq_cmd3_5", "seq_cmd3_6", "seq_cmd3_7", "seq_cmd3_8", "seq_cmd3_9", "cnt_usr_stg_seq4", "seq_ico4", "seq_cmd4_1", "seq_cmd4_2", "seq_cmd4_3", "seq_cmd4_4", "seq_cmd4_5", "seq_cmd4_6", "seq_cmd4_7", "seq_cmd4_8", "seq_cmd4_9", "cnt_usr_stg_seq5", "seq_ico5", "seq_cmd5_1", "seq_cmd5_2", "seq_cmd5_3", "seq_cmd5_4", "seq_cmd5_5", "seq_cmd5_6", "seq_cmd5_7", "seq_cmd5_8", "seq_cmd5_9", "cnt_usr_stg_seq6", "seq_ico6", "seq_cmd6_1", "seq_cmd6_2", "seq_cmd6_3", "seq_cmd6_4", "seq_cmd6_5", "seq_cmd6_6", "seq_cmd6_7", "seq_cmd6_8", "seq_cmd6_9" };
-static const char *style_names[] = { "ButtonStd", "TabStratagem", "TabConfig", "SliderConfig", "SwitchConfig", "LabelCooldown", "CheckboxConfig", "DropdownConfig", "ArrowSequence" };
-static const char *theme_names[] = { "Default" };
-
-uint32_t theme_colors[1][6] = {
-    { 0xffffffff, 0xffffdf00, 0xff679552, 0xff49adc9, 0xffde7b6c, 0xffc9b269 },
-};
-
 
 typedef void (*tick_screen_func_t)();
 tick_screen_func_t tick_screen_funcs[] = {
@@ -8191,24 +8272,285 @@ tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_update,
 };
 void tick_screen(int screen_index) {
-    tick_screen_funcs[screen_index]();
+    if (screen_index >= 0 && screen_index < 12) {
+        tick_screen_funcs[screen_index]();
+    }
 }
 void tick_screen_by_id(enum ScreensEnum screenId) {
-    tick_screen_funcs[screenId - 1]();
+    tick_screen(screenId - 1);
 }
 
+//
+// Styles
+//
+
+static const char *style_names[] = { "ButtonStd", "TabStratagem", "TabConfig", "SliderConfig", "SwitchConfig", "LabelCooldown", "CheckboxConfig", "DropdownConfig", "ArrowSequence" };
+
+extern void add_style(lv_obj_t *obj, int32_t styleIndex);
+extern void remove_style(lv_obj_t *obj, int32_t styleIndex);
+
+//
+// Fonts
+//
+
+ext_font_desc_t fonts[] = {
+#if LV_FONT_MONTSERRAT_8
+    { "MONTSERRAT_8", &lv_font_montserrat_8 },
+#endif
+#if LV_FONT_MONTSERRAT_10
+    { "MONTSERRAT_10", &lv_font_montserrat_10 },
+#endif
+#if LV_FONT_MONTSERRAT_12
+    { "MONTSERRAT_12", &lv_font_montserrat_12 },
+#endif
+#if LV_FONT_MONTSERRAT_14
+    { "MONTSERRAT_14", &lv_font_montserrat_14 },
+#endif
+#if LV_FONT_MONTSERRAT_16
+    { "MONTSERRAT_16", &lv_font_montserrat_16 },
+#endif
+#if LV_FONT_MONTSERRAT_18
+    { "MONTSERRAT_18", &lv_font_montserrat_18 },
+#endif
+#if LV_FONT_MONTSERRAT_20
+    { "MONTSERRAT_20", &lv_font_montserrat_20 },
+#endif
+#if LV_FONT_MONTSERRAT_22
+    { "MONTSERRAT_22", &lv_font_montserrat_22 },
+#endif
+#if LV_FONT_MONTSERRAT_24
+    { "MONTSERRAT_24", &lv_font_montserrat_24 },
+#endif
+#if LV_FONT_MONTSERRAT_26
+    { "MONTSERRAT_26", &lv_font_montserrat_26 },
+#endif
+#if LV_FONT_MONTSERRAT_28
+    { "MONTSERRAT_28", &lv_font_montserrat_28 },
+#endif
+#if LV_FONT_MONTSERRAT_30
+    { "MONTSERRAT_30", &lv_font_montserrat_30 },
+#endif
+#if LV_FONT_MONTSERRAT_32
+    { "MONTSERRAT_32", &lv_font_montserrat_32 },
+#endif
+#if LV_FONT_MONTSERRAT_34
+    { "MONTSERRAT_34", &lv_font_montserrat_34 },
+#endif
+#if LV_FONT_MONTSERRAT_36
+    { "MONTSERRAT_36", &lv_font_montserrat_36 },
+#endif
+#if LV_FONT_MONTSERRAT_38
+    { "MONTSERRAT_38", &lv_font_montserrat_38 },
+#endif
+#if LV_FONT_MONTSERRAT_40
+    { "MONTSERRAT_40", &lv_font_montserrat_40 },
+#endif
+#if LV_FONT_MONTSERRAT_42
+    { "MONTSERRAT_42", &lv_font_montserrat_42 },
+#endif
+#if LV_FONT_MONTSERRAT_44
+    { "MONTSERRAT_44", &lv_font_montserrat_44 },
+#endif
+#if LV_FONT_MONTSERRAT_46
+    { "MONTSERRAT_46", &lv_font_montserrat_46 },
+#endif
+#if LV_FONT_MONTSERRAT_48
+    { "MONTSERRAT_48", &lv_font_montserrat_48 },
+#endif
+};
+
+//
+// Color themes
+//
+
+void change_color_theme(uint32_t theme_index) {
+    {
+        lv_obj_set_style_border_color(objects.weapons_mg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_hmg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_sw, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_ac, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_amr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_rg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_lc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_qc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_at, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_e, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_sg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_mxg, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_bs, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_arl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_c, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_eat, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_en, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_rr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_eatl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_spr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_wsp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_gl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_bfgl, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_de, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_ste, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_ft, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_dt, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.weapons_cre, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_bsb, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_sgp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_ds, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_gd, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_gdb, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_gdr, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_gdk, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_gdhd, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_sup, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_ph, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_c4_p, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_jp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_hp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.backpack_wp, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_frv, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_frvs, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_frvi, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_bmk, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_otf, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_cqc, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_ss, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_pe, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_ee, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_btes, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.supply_les, lv_color_hex(theme_colors[theme_index][3]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_mgs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_gs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_acs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_hmge, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_ate, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_fs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_ms, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_rs, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_ems, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_ls, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.sentry_gms, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_gm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_tt, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_sgr, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_apm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_atm, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_im, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.ground_gb, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike120, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike380, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_ors, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_ogb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_oas, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_ol, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_ops, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_owb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_oes, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_onb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_ogs, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.strike_oss, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle110, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle500, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle_a, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle_cb, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle_sr, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle_na, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.eagle_ss, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(objects.msg_label, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_border_color(objects.btn_preset1, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_preset2, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_preset3, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_preset4, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_preset5, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_preset6, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_border_color(objects.obj27, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.obj28, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_border_color(objects.btn_reinforce, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_resupply, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_sos, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_rearm, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_seaf, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_hellbomb, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_border_color(objects.btn_sssd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_ud, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_hbd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_pd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_sef, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_td, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_sp, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_oif, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_dfv, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_cc, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.btn_csd, lv_color_hex(theme_colors[theme_index][5]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_text_color(objects.lbl_brightness, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(objects.lbl_delay, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_border_color(objects.obj64, lv_color_hex(theme_colors[theme_index][2]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(objects.obj65, lv_color_hex(theme_colors[theme_index][4]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    {
+        lv_obj_set_style_text_color(objects.obj66, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(objects.obj68, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(objects.obj69, lv_color_hex(theme_colors[theme_index][1]), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    lv_style_set_border_color(get_style_button_std_MAIN_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_style_set_bg_color(get_style_slider_config_INDICATOR_DEFAULT(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_style_set_bg_color(get_style_slider_config_KNOB_DEFAULT(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_style_set_border_color(get_style_switch_config_MAIN_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_style_set_bg_color(get_style_switch_config_KNOB_DEFAULT(), lv_color_hex(theme_colors[theme_index][0]));
+    lv_style_set_bg_color(get_style_switch_config_KNOB_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_style_set_text_color(get_style_checkbox_config_INDICATOR_CHECKED(), lv_color_hex(theme_colors[theme_index][1]));
+    lv_obj_invalidate(objects.intro);
+    lv_obj_invalidate(objects.setup);
+    lv_obj_invalidate(objects.preset);
+    lv_obj_invalidate(objects.reset_preset);
+    lv_obj_invalidate(objects.image);
+    lv_obj_invalidate(objects.game);
+    lv_obj_invalidate(objects.mission);
+    lv_obj_invalidate(objects.config);
+    lv_obj_invalidate(objects.reset_config);
+    lv_obj_invalidate(objects.about);
+    lv_obj_invalidate(objects.manual);
+    lv_obj_invalidate(objects.update);
+}
+static const char *theme_names[] = { "Default" };
+uint32_t theme_colors[1][6] = {
+    { 0xffffffff, 0xffffdf00, 0xff679552, 0xff49adc9, 0xffde7b6c, 0xffc9b269 },
+};
+
+//
+//
+//
+
 void create_screens() {
+    // Initialize styles
     eez_flow_init_styles(add_style, remove_style);
-    
-    eez_flow_init_screen_names(screen_names, sizeof(screen_names) / sizeof(const char *));
-    eez_flow_init_object_names(object_names, sizeof(object_names) / sizeof(const char *));
     eez_flow_init_style_names(style_names, sizeof(style_names) / sizeof(const char *));
-    eez_flow_init_themes(theme_names, sizeof(theme_names) / sizeof(const char *), change_color_theme);
+
+eez_flow_init_fonts(fonts, sizeof(fonts) / sizeof(ext_font_desc_t));
     
+    eez_flow_init_themes(theme_names, sizeof(theme_names) / sizeof(const char *), change_color_theme, &theme_colors[0][0], sizeof(theme_colors[0]) / sizeof(uint32_t));
+
+// Set default LVGL theme
     lv_disp_t *dispp = lv_disp_get_default();
     lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
     
+    // Initialize screens
+    eez_flow_init_screen_names(screen_names, sizeof(screen_names) / sizeof(const char *));
+    eez_flow_init_object_names(object_names, sizeof(object_names) / sizeof(const char *));
+    
+    // Create screens
     create_screen_intro();
     create_screen_setup();
     create_screen_preset();

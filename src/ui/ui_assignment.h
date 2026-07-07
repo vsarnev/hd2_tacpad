@@ -115,7 +115,9 @@ extern "C"
         SG_BTES,
 
         SG_FRVS,
-        SG_FRVI
+        SG_FRVI,
+
+        SG_HB // Hellbomb — added so it can be selected into a loadout
     };
 
     // Assign stratagems index to UI buttons

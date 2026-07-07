@@ -20,13 +20,29 @@ extern "C"
 } /*extern "C"*/
 #endif
 
-// UI Sounds
-#define SND_SWITCH "S:assets/sound/_swt.wav"
-#define SND_INTRO "S:assets/sound/intro.wav"
-#define SND_SELECT "S:assets/sound/_sel.wav"
-#define SND_DESELECT "S:assets/sound/_des.wav"
-#define SND_RESET "S:assets/sound/_rst.wav"
-#define SND_SWIPE "S:assets/sound/_swp.wav"
+// UI Sounds — repointed from the original Macropad sounds to Helldivers SFX.
+#define SND_SWITCH "S:assets/sound/close.wav"   // general menu / config interaction (generic press)
+#define SND_INTRO "S:assets/sound/init.wav"
+#define SND_SELECT "S:assets/sound/lsel.wav"    // stratagem selected into loadout
+#define SND_DESELECT "S:assets/sound/close.wav" // stratagem removed from loadout
+#define SND_RESET "S:assets/sound/lclose.wav"   // loadout reset / cleared
+#define SND_TAB "S:assets/sound/tabsw.wav"       // category tab switch (distinct from the generic click)
+
+// Helldivers SFX (Gromlon Props pack) — space-free names; must match the files on the SD card
+#define SND_ARR_UP "S:assets/sound/arru.wav"
+#define SND_ARR_DOWN "S:assets/sound/arrd.wav"
+#define SND_ARR_LEFT "S:assets/sound/arrl.wav"
+#define SND_ARR_RIGHT "S:assets/sound/arrr.wav"
+#define SND_PRIME "S:assets/sound/prime.wav"
+#define SND_STRAT_START "S:assets/sound/start.wav"
+#define SND_STRAT_CLOSE "S:assets/sound/close.wav"
+#define SND_CLICK "S:assets/sound/close.wav" // generic press (was click.wav — close.wav is the generic cue now)
+#define SND_LOADOUT_OPEN "S:assets/sound/lopen.wav"
+#define SND_LOADOUT_CLOSE "S:assets/sound/lclose.wav"
+#define SND_LOADOUT_SELECT "S:assets/sound/lsel.wav"
+#define SND_STRAT_ERROR "S:assets/sound/serror.wav"
+#define SND_ERROR "S:assets/sound/error.wav"
+#define SND_ACTIVATE "S:assets/sound/activate.wav"
 
 // Default stratagems
 #define SND_REINFORCE "S:assets/sound/reinf.wav"
@@ -56,7 +72,7 @@ enum styleColors
 
 #define MAX_CMD_LENGTH 9
 #define SG_BASE_AMOUNT 17
-#define SG_ITEM_AMOUNT 90
+#define SG_ITEM_AMOUNT 91
 
 void app_main();
 void playbackSound(char *path);

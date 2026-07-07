@@ -4,6 +4,7 @@
 #include "configuration.h"
 #include "screens.h"
 #include "usb/usb_controller.h"
+#include "esp_timer.h"
 
 extern uint8_t connectionType;
 
@@ -34,7 +35,7 @@ void action_mute_sound(lv_event_t *e)
 // Trigger when tab navigation has changed
 void action_tab_changed(lv_event_t *e)
 {
-	playbackSound(SND_SWIPE);
+	playbackSound(SND_TAB);
 }
 
 // Change screen orientation

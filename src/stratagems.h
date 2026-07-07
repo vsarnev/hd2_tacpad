@@ -1295,7 +1295,21 @@ const stratagemItem strategemItemList[SG_ITEM_AMOUNT] = {
         &img_frvi3,
         &img_frvi1,
         &img_frvi2,
-        SG_FRVI}};
+        SG_FRVI},
+
+    // 90
+    // Hellbomb
+    {
+        {INPUT_DOWN, INPUT_UP, INPUT_LEFT, INPUT_DOWN, INPUT_UP, INPUT_RIGHT, INPUT_DOWN, INPUT_UP, 0},
+        0,
+        0,
+        0,
+        SND_BACKPACK,
+        sgRed,
+        &img_hb3,
+        &img_hb1,
+        &img_hb2,
+        SG_HB}};
 
 const stratagemBase strategemBaseList[SG_BASE_AMOUNT] = {
     // 0

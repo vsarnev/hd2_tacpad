@@ -9,6 +9,7 @@ extern "C" {
 
 esp_err_t i2s_setup(void);
 esp_err_t play_wav(char *fp);
+void preload_wav(char *fp);
 
 #ifdef __cplusplus
 } /*extern "C"*/
