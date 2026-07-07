@@ -1,4 +1,4 @@
-#include "i2s_configuration.h" // basic sysetm includes and pin setup
+#include "i2s_configuration.h" // basic system includes and pin setup
 #include "driver/i2s_std.h"    // i2s setup
 #include "lvgl.h"
 #include <string.h>
@@ -66,7 +66,7 @@ esp_err_t i2s_setup(void)
     // setup the i2s config
     i2s_std_config_t std_cfg = {
         .clk_cfg = I2S_STD_CLK_DEFAULT_CONFIG(44100),                                                    // the wav file sample rate
-        .slot_cfg = slotConfig, // the wav faile bit and channel config
+        .slot_cfg = slotConfig, // the wav file bit and channel config
         .gpio_cfg = {
             // refer to configuration.h for pin setup
             .mclk = AUDIO_I2S_MCK_IO,
@@ -197,7 +197,6 @@ esp_err_t play_wav(char *fp)
         lv_fs_close(&f);
         return ESP_FAIL;
     }
-    ESP_LOGI(TAG, "(%s) FS opened.", fp);
 
     // skip the header...
     res = lv_fs_seek(&f, 44, LV_FS_SEEK_SET);
@@ -207,7 +206,6 @@ esp_err_t play_wav(char *fp)
         lv_fs_close(&f);
         return ESP_FAIL;
     }
-    ESP_LOGI(TAG, "(%s) FS seeked.", fp);
 
     // create a writer buffer
     size_t chunkSize = sizeof(int8_t);
@@ -222,7 +220,6 @@ esp_err_t play_wav(char *fp)
         lv_fs_close(&f);
         return ESP_FAIL;
     }
-    ESP_LOGI(TAG, "FS read bytes: %lx", bytes_read);
 
     // Allocate + configure the channel only on the first play, then reuse it every time.
     if (!i2s_initialized)

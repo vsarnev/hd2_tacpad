@@ -650,7 +650,7 @@ static void lvgl_port_tick_increment(void *arg)
 
 static esp_err_t lvgl_port_tick_init(void)
 {
-    // Tick interface for LVGL (using esp_timer to generate 2ms periodic event)
+    // Tick interface for LVGL (esp_timer periodic tick; period = lvgl_port_timer_period_ms, 5ms)
     const esp_timer_create_args_t lvgl_tick_timer_args = {
         .callback = &lvgl_port_tick_increment,
         .name = "LVGL tick",

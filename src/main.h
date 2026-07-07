@@ -39,10 +39,7 @@ extern "C"
 #define SND_CLICK "S:assets/sound/close.wav" // generic press (was click.wav — close.wav is the generic cue now)
 #define SND_LOADOUT_OPEN "S:assets/sound/lopen.wav"
 #define SND_LOADOUT_CLOSE "S:assets/sound/lclose.wav"
-#define SND_LOADOUT_SELECT "S:assets/sound/lsel.wav"
 #define SND_STRAT_ERROR "S:assets/sound/serror.wav"
-#define SND_ERROR "S:assets/sound/error.wav"
-#define SND_ACTIVATE "S:assets/sound/activate.wav"
 
 // Default stratagems
 #define SND_REINFORCE "S:assets/sound/reinf.wav"
@@ -76,12 +73,11 @@ enum styleColors
 
 void app_main();
 void playbackSound(char *path);
-void setStratagemCode(uint8_t sequence[9], uint8_t mask, bool plain);
+void setStratagemCode(uint8_t sequence[MAX_CMD_LENGTH], uint8_t mask, bool plain);
 void hidHoldModifier(uint8_t mask); // hold a modifier (Ctrl) down — opens the in-game stratagem menu
 void hidReleaseModifier(void);      // release the held modifier — closes/throws
 void dimScreen(int brightness);
 void updateConnection();
-void updateBatteryInfo();
 void ui_update_task();
 
 #endif

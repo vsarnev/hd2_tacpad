@@ -76,10 +76,8 @@ int8_t getConfig(char *key, int8_t defaultValue)
     switch (ret)
     {
     case ESP_OK:
-        ESP_LOGI(TAG_CFG, "%s = %" PRIu8 "\n", key, value);
         return value;
     case ESP_ERR_NVS_NOT_FOUND:
-        ESP_LOGI(TAG_CFG, "The value of (%s) is not initialized yet!\n", key);
         break;
     default:
         ESP_LOGE(TAG_CFG, "Error (%s) reading!\n", esp_err_to_name(ret));
@@ -97,10 +95,8 @@ int16_t getConfigBig(char *key, int16_t defaultValue)
     switch (ret)
     {
     case ESP_OK:
-        ESP_LOGI(TAG_CFG, "%s = %" PRIu16 "\n", key, value);
         return value;
     case ESP_ERR_NVS_NOT_FOUND:
-        ESP_LOGI(TAG_CFG, "The value of (%s) is not initialized yet!\n", key);
         break;
     default:
         ESP_LOGE(TAG_CFG, "Error (%s) reading!\n", esp_err_to_name(ret));
@@ -129,10 +125,6 @@ void setConfig(char *key, uint8_t value)
     {
         ESP_LOGE(TAG_CFG, "Write (%s) failed!\n", key);
     }
-    else
-    {
-        ESP_LOGI(TAG_CFG, "Done\n");
-    }
 
     nvs_close(nvsConfig);
 }
@@ -153,10 +145,6 @@ void setConfigBig(char *key, uint16_t value)
     if (ret != ESP_OK)
     {
         ESP_LOGE(TAG_CFG, "Write (%s) failed!\n", key);
-    }
-    else
-    {
-        ESP_LOGI(TAG_CFG, "Done\n");
     }
 
     nvs_close(nvsConfig);

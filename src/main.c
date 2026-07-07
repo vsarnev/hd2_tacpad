@@ -2,11 +2,7 @@
 #include "display.h"
 #include "esp_bsp.h"
 #include "lv_port.h"
-#include <esp_log.h>   // Add this line to include the header file that declares ESP_LOGI
-#include <esp_flash.h> // Add this line to include the header file that declares esp_flash_t
-#include <esp_chip_info.h>
 #include <esp_system.h>
-#include <esp_heap_caps.h>
 #include <ui/ui.h>
 #include <ui/vars.h>
 #include <ui/screens.h>
@@ -14,7 +10,6 @@
 #include <ui/images.h>
 #include <ui/ui_events.h>
 #include <ui/ui_post.h>
-#include "driver/gpio.h"
 #include "hid_dev.h"
 #include "i2s_player.h"
 #include "ble/ble_controller.h"
@@ -22,9 +17,6 @@
 #include "configuration.h"
 #include "keymaps.h"
 #include "main.h"
-
-// Tag for logging
-static const char *TAG = "HD2 Macropad";
 
 // Connection type
 uint8_t connectionType = CT_NONE;
@@ -219,33 +211,19 @@ void hid_input_task(void *pvParameters)
 
     if (stratagemCode[0] > 0)
     {
-      ESP_LOGI(TAG, "Send command");
-
       uint8_t cmdIndex = 0;
-
-      // Pre-calculate one time for further use
       double inputDelayPeriod = inputDelay / portTICK_PERIOD_MS;
 
-      // Send modifier keys (mask)
+      // Press the modifier (Ctrl) first, then walk the sequence pressing/releasing each key.
       fptr(stratagemMask, 0, 0);
-
       vTaskDelay(inputDelayPeriod);
 
-      // Loop through command sequence from buffer
       while (stratagemCode[cmdIndex] > 0 && cmdIndex < MAX_CMD_LENGTH)
       {
-        // Press key defined by the keycode
         fptr(stratagemMask, stratagemCode[cmdIndex], 1);
-
         vTaskDelay(inputDelayPeriod);
-
-        // Release key defined by the keycode
         fptr(stratagemMask, stratagemCode[cmdIndex], 0);
-
         vTaskDelay(inputDelayPeriod);
-
-        ESP_LOGI(TAG, "CMD Index: %c", (char)(cmdIndex + '0'));
-        ESP_LOGI(TAG, "CMD Value: %d", stratagemCode[cmdIndex]);
 
         stratagemCode[cmdIndex] = 0;
         cmdIndex++;
@@ -254,8 +232,6 @@ void hid_input_task(void *pvParameters)
       // Release everything (this final Ctrl-up is what throws the stratagem — and, in arm mode,
       // is the auto-disarm after a completed code).
       fptr(0, 0, 0);
-
-      ESP_LOGI(TAG, "Finish command");
     }
   }
 }
