@@ -7,3 +7,4 @@
 src/version.h
 dependencies.lock
 eez/HD2 Macropad.eez-project-ui-state
+src/ui/.eez-project-build

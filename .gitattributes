@@ -1,0 +1,12 @@
+# Normalize line endings so Windows checkouts don't churn generated files.
+# Text files are stored LF in the repo; binary assets are left byte-for-byte.
+* text=auto
+
+*.wav binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.bin binary
+*.zip binary
+*.ttf binary
