@@ -7,7 +7,6 @@ A working **HELLDIVERS™ 2 Stratagem Tacpad** — a cosplay prop that's also a 
 Built on an affordable ESP32-S3 touchscreen and connected over **USB or Bluetooth** as a keyboard, it works as an actual stratagem macropad *and* looks the part strapped to your wrist on the drop.
 
 ![The Tacpad](screens/tacpad.jpg)
-<!-- TODO: save the hardware photo to screens/tacpad.jpg -->
 
 > [!NOTE]
 > This is a **fork** of [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad) — see [Lineage & Credits](#lineage--credits) below. It runs on the specific device [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) (a 3.5" ESP32-S3 QSPI touchscreen).
@@ -39,6 +38,7 @@ Everything from the base firmware, plus a full front-line immersion layer:
 - 🎯 **Manual arm-mode input** — hold the centre d-pad toggle to *open the stratagem menu* (it holds Ctrl on the host), then tap your code on the arrows. Each valid input is sent **live**, so the in-game menu builds as you type; complete a valid code and it throws + auto-disarms.
 - ⚡ **Crisp, reliable touch input** — the panel's phantom double-taps are fixed at the source, so codes register cleanly even when spammed fast.
 - 🔈 **Volume control** in settings and loudness-normalized audio across every cue and voice line.
+- 🔋 **Battery level indicator** — for a LiPo-powered build, a battery icon + % up top and a voltage readout with on-device calibration, read through the ESP32's ADC. See [Battery monitor](#battery-monitor-optional) for wiring.
 
 Loadout selection, presets, user icons, cooldown tracking, ship-module modifiers, and BLE/USB switching all carry over from the base firmware.
 
@@ -49,6 +49,20 @@ Loadout selection, presets, user icons, cooldown tracking, ship-module modifiers
 - **Device:** [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) — 3.5" ESP32-S3 QSPI touchscreen (AXS15231B touch controller).
 - **microSD card** — holds the sound + image assets.
 - **3D-printed Tacpad shell** — based on [Senpaijeffa's design](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063).
+
+### Battery monitor (optional)
+
+For a LiPo-powered build, the Tacpad can show a live battery **%** + **voltage** in the settings screen. Wire a **voltage divider** from the battery positive to **GPIO7** (broken out on the `P2` "Extended IO" header — it's `ADC1_CH6`):
+
+```
+battery+ ──[ R1 ]──┬──[ R2 ]── GND
+                   │
+                 GPIO7   (ADC1_CH6)
+```
+
+- Use two **equal resistors** (e.g. 10 kΩ / 10 kΩ) for a 1:2 divide — a full 4.2 V reads ~2.1 V at the pin, safely inside the ADC range. The ratio is a `#define` (`BATT_DIVIDER_RATIO`) in [`src/battery.c`](src/battery.c); set it to `(R1 + R2) / R2` if you use a different pair.
+- ⚠️ **Never wire the raw battery straight to a GPIO** — a full LiPo hits 4.2 V and the ADC input maxes at ~3.3 V, so the divider is mandatory.
+- Calibrate on-device with the **−/+** buttons on the settings screen (0.01 V steps); the offset saves to NVS, so it survives reboots with no reflash.
 
 ## Build & flash
 
