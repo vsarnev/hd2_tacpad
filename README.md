@@ -4,12 +4,14 @@
 
 A working **HELLDIVERS™ 2 Stratagem Tacpad** — a cosplay prop that's also a real stratagem input device. Punch your codes into the touchscreen and the Tacpad transmits them to your PC as keyboard input, complete with the sound effects, team voice callouts, and a **"REQUEST RECEIVED"** call-in reveal straight off the front lines.
 
-Built on an affordable ESP32-S3 touchscreen and connected over **USB or Bluetooth** as a keyboard, it works as an actual stratagem macropad *and* looks the part strapped to your wrist on the drop.
+Built on an affordable ESP32-S3 touchscreen, it pairs over **Bluetooth** as a wireless keyboard — an actual stratagem macropad that *also* looks the part strapped to your wrist on the drop.
 
 ![The Tacpad](screens/tacpad.jpg)
 
 > [!NOTE]
 > This is a **fork** of [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad) — see [Lineage & Credits](#lineage--credits) below. It runs on the specific device [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) (a 3.5" ESP32-S3 QSPI touchscreen).
+>
+> **The assembled Tacpad connects over Bluetooth only** — the enclosure covers the board's USB-C port. The firmware keeps USB support (inherited from the base project) for use on the bare board, e.g. for flashing.
 
 ---
 
@@ -47,7 +49,7 @@ Loadout selection, presets, user icons, cooldown tracking, ship-module modifiers
 ## Hardware
 
 - **Device:** [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) — 3.5" ESP32-S3 QSPI touchscreen (AXS15231B touch controller).
-- **microSD card** — holds the sound + image assets.
+- **microSD card** — holds the audio assets (the stratagem images are compiled into the firmware, not loaded from the card).
 - **3D-printed Tacpad shell** — based on [Senpaijeffa's design](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063).
 
 ### Battery monitor (optional)
@@ -72,15 +74,16 @@ Built with [PlatformIO](https://platformio.org/) (ESP-IDF / `espressif32`):
 pio run -t upload
 ```
 
-Then copy the contents of `sdcard/` to the root of a microSD card and insert it into the device. On first boot, pick your connection (USB or Bluetooth) and stratagem keybinding in the settings screen — it defaults to **Ctrl + WASD/arrow keys** to match the game.
+Then copy the contents of `sdcard/` to the root of a microSD card and insert it into the device. On first boot, choose **Bluetooth** (or USB, on the bare board) and your stratagem keybinding in the settings screen — it defaults to **Ctrl + WASD/arrow keys** to match the game.
 
 > [!TIP]
 > For full step-by-step device assembly, wiring, and configuration, follow unic8s's [Wiki](https://github.com/unic8s/hd2_macropad/wiki) — it all applies to this fork.
 
 ## Assets (SD card)
 
+The SD card holds **only the audio** — the stratagem images are compiled into the firmware, not read from the card.
+
 - `sdcard/assets/sound/` — WAV sound effects + voice lines (44.1 kHz / 16-bit / mono PCM).
-- `sdcard/assets/img/` — stratagem icons.
 
 ---
 
