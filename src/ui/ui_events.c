@@ -1700,7 +1700,7 @@ void matchManualSequence()
 			manualPrefixValid = true;
 		}
 
-		if (!manualAutoComplete && !matchComplete)
+		if (!matchComplete)
 		{
 			match = false;
 		}
@@ -1737,7 +1737,7 @@ void matchManualSequence()
 				manualPrefixValid = true;
 			}
 
-			if (!manualAutoComplete && !matchComplete)
+			if (!matchComplete)
 			{
 				match = false;
 			}
@@ -1791,7 +1791,7 @@ static void matchManualHiddenSet(bool utilityShown)
 			{
 				manualPrefixValid = true;
 			}
-			if (!manualAutoComplete && !matchComplete)
+			if (!matchComplete)
 			{
 				match = false;
 			}
@@ -1825,7 +1825,7 @@ static void matchManualHiddenSet(bool utilityShown)
 			{
 				manualPrefixValid = true;
 			}
-			if (!manualAutoComplete && !matchComplete)
+			if (!matchComplete)
 			{
 				match = false;
 			}
@@ -1904,7 +1904,7 @@ void mapManualSequence()
 			manualPrefixValid = true;
 		}
 
-		if (!manualAutoComplete && !matchComplete)
+		if (!matchComplete)
 		{
 			match = false;
 		}

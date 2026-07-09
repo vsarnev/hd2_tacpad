@@ -4,6 +4,7 @@
 #include "ui_events.h"
 #include "version.h"
 #include "configuration.h"
+#include "battery.h"
 
 extern lv_obj_t *cooldownLabels[MAX_USER_STRATAGEMS];
 
@@ -101,6 +102,14 @@ void ui_post()
 
   // Add the sound-volume slider to the config screen (not part of the generated UI).
   initVolumeControl();
+
+  // Set up the ADC battery monitor (GPIO7 + divider) and its config-screen % indicator.
+  initBatteryMonitor();
+
+  // The "Auto-complete for manual" setting is obsolete under live input (it would fire on a partial
+  // code, sending an incomplete sequence to the game), so hide its Misc-tab row. The manual matcher
+  // now always requires the full code (see the !matchComplete guards in ui_events.c).
+  lv_obj_add_flag(lv_obj_get_parent(objects.chb_auto_complete), LV_OBJ_FLAG_HIDDEN);
 
   // Stop the manual screen (and the arrows' container) from running scroll-detection on every press.
   // Nothing there needs to scroll (it all fits), and the scroll interaction was emitting a stray

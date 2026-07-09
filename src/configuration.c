@@ -8,6 +8,7 @@
 #include "ui/styles.h"
 #include "main.h"
 #include "configuration.h"
+#include "battery.h"
 
 const char *TAG_CFG = "Configuration";
 
@@ -193,7 +194,10 @@ void setRotation(int rotation, bool restore)
         setConfig(CFG_KEY_ROTATION, screenRotation);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 
     if (restart)
     {
@@ -242,7 +246,10 @@ void setMuted(bool muted, bool restore)
         setConfig(CFG_KEY_MUTED, playerMuted ? 1 : 0);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 }
 
 // Write the sound volume (0..100 %) to configuration and apply it to the player.
@@ -338,7 +345,10 @@ void setConnectivity(uint8_t index, bool restore)
         setConfig(CFG_KEY_CONNECTIVITY, index);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 
     deinitConnection();
 
@@ -377,7 +387,10 @@ void setKeymap(uint8_t index, bool restore)
         setConfig(CFG_KEY_KEYMAP, index);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 }
 
 void setAutoComplete(bool enable, bool restore)
@@ -400,7 +413,10 @@ void setAutoComplete(bool enable, bool restore)
         setConfig(CFG_KEY_AUTOCOMPLETE, manualAutoComplete ? 1 : 0);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 }
 
 void setGameAfterPreset(bool enable, bool restore)
@@ -423,7 +439,10 @@ void setGameAfterPreset(bool enable, bool restore)
         setConfig(CFG_KEY_GAMEAFTERPRESET, gameAfterPreset ? 1 : 0);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 }
 
 void setCooldown(bool enable, bool restore)
@@ -446,7 +465,10 @@ void setCooldown(bool enable, bool restore)
         setConfig(CFG_KEY_COOLDOWN, showCooldowns ? 1 : 0);
     }
 
-    playbackSound(SND_SWITCH);
+    if (!restore) // silent when restoring saved config at boot; only click on a real user change
+    {
+        playbackSound(SND_SWITCH);
+    }
 }
 
 void setShipModules(bool restore)
@@ -525,6 +547,8 @@ void loadConfig()
     {
         return;
     }
+
+    batteryLoadCalibration(); // NVS handle is open now, so the saved battery offset can be read
 
     uint8_t delay = getConfig(CFG_KEY_DELAY, 100);
     setDelay(delay, true);

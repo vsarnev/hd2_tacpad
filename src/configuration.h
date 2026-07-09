@@ -12,6 +12,8 @@ extern "C"
 	esp_err_t initConfig();
 	int8_t getConfig(char *key, int8_t defaultValue);
 	void setConfig(char *key, uint8_t value);
+	int16_t getConfigBig(char *key, int16_t defaultValue);
+	void setConfigBig(char *key, uint16_t value);
 	void setDelay(int delay, bool restore);
 	void setRotation(int rotation, bool restore);
 	void setBrightness(int brightness, bool restore);
