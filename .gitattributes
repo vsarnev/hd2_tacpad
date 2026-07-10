@@ -10,3 +10,7 @@
 *.bin binary
 *.zip binary
 *.ttf binary
+*.stl binary
+*.3mf binary
+*.step binary
+*.stp binary

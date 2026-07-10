@@ -20,7 +20,7 @@ Built on an affordable ESP32-S3 touchscreen, it pairs over **Bluetooth** as a wi
 This project stands on the shoulders of prior democratic contributions — please support the originals:
 
 - **Firmware base — [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad).** All the core stratagem-input, loadout, preset, cooldown, and configuration machinery is theirs. This fork is an immersion + input-feel layer on top. Detailed device setup & configuration lives in their [Wiki](https://github.com/unic8s/hd2_macropad/wiki).
-- **Physical Tacpad design — [Senpaijeffa's *Helldivers 2 Tacpad*](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063)** on MakerWorld. The 3D-printed prop this build is based on. *(Custom print files tailored to this build are planned.)*
+- **Physical Tacpad design — [Senpaijeffa's *Helldivers 2 Tacpad*](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063)** on MakerWorld. The 3D-printed prop this build is based on. *(Print files for this build are in [`3d-print/`](3d-print/).)*
 - **Stratagem icons — [@nvigneux](https://github.com/nvigneux)'s [Helldivers 2 Stratagems SVG set](https://github.com/nvigneux/Helldivers-2-Stratagems-icons-svg).**
 - **Device demo/reference — [@NorthernMan54](https://github.com/NorthernMan54)'s [JC3248W535EN project](https://github.com/NorthernMan54/JC3248W535EN).**
 - **UI & menu SFX — [Gromlon Props](https://github.com/gromprops/Helldivers-2-Stratagem-Tacpad).** The interface, menu, and stratagem sound effects come from their Helldivers 2 Stratagem Tacpad project.
@@ -50,7 +50,10 @@ Loadout selection, presets, user icons, cooldown tracking, ship-module modifiers
 
 - **Device:** [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) — 3.5" ESP32-S3 QSPI touchscreen (AXS15231B touch controller).
 - **microSD card** — holds the audio assets (the stratagem images are compiled into the firmware, not loaded from the card).
-- **3D-printed Tacpad shell** — based on [Senpaijeffa's design](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063).
+- **3D-printed Tacpad shell** — based on [Senpaijeffa's design](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063); STLs in [`3d-print/`](3d-print/).
+
+> [!TIP]
+> **Building your own?** The **[Build Guide](BUILD.md)** walks through the bill of materials, wiring (diagram + photos), and assembly.
 
 ### Battery monitor (optional)
 
