@@ -128,12 +128,12 @@ The shell is based on [Senpaijeffa's Helldivers 2 Tacpad](https://makerworld.com
 
 | Step | Reference |
 | --- | :-: |
-| **3a. Battery, charging & boost.** Solder two 2-pin JST connectors in parallel onto the TP4056's **BAT+ / BAT-** pads (mind polarity, don't short anything), then plug a battery into each. Connect a USB cable to the TP4056 and confirm power at **OUT+ / OUT-** with a multimeter. Wire **OUT+ → the converter's V0** pad and **OUT- → GND**. *(If adding the battery monitor, solder the two 10 kΩ resistors to OUT+/OUT- now.)* Confirm ~5 V between the converter's **GND and V1** pads (mine reads ~5.4 V, which is fine). | ![TP4056 + step-up wiring](screens/4056_chip_wiring.jpg) |
-| **3a (cont.) 5 V feed + insulation.** Run a wire from the converter's **V1** pad (5 V out) and another from **GND** (either the converter's GND or the TP4056's OUT-); optionally terminate them in a 2P JST so the step-up is easy to disconnect. Then **insulate the converter with Kapton tape** so it can't short against anything. | ![Step-up insulated with Kapton tape](screens/kapton_tape.jpg) |
-| **3b. Rocker switch & power connector.** The converter's **V1 = VIN** and **GND = GND**. Wire both to the **4P1.25 power connector**, with the rocker switch **interrupting the VIN line**. Mind the Display's pin labeling. Plug it in (double-check polarity!), flip the switch, and confirm the unit powers on. | ![Power switch wiring](screens/switch_wiring.jpg) |
+| **3a. Battery, charging & boost.** Solder two 2-pin JST connectors in parallel onto the TP4056's **BAT+ / BAT-** pads (mind polarity, don't short anything), then plug a battery into each. Connect a USB cable to the TP4056 and confirm power at **OUT+ / OUT-** with a multimeter. Wire **OUT+ → the converter's V0** pad and **OUT- → GND**. *(If adding the battery monitor, solder the two 10 kΩ resistors to OUT+/OUT- now.)* Confirm ~5 V between the converter's **GND and V1** pads (mine reads ~5.4 V, which is fine). | <img src="screens/4056_chip_wiring.jpg" alt="TP4056 + step-up wiring" width="400"> |
+| **3a (cont.) 5 V feed + insulation.** Run a wire from the converter's **V1** pad (5 V out) and another from **GND** (either the converter's GND or the TP4056's OUT-); optionally terminate them in a 2P JST so the step-up is easy to disconnect. Then **insulate the converter with Kapton tape** so it can't short against anything. | <img src="screens/kapton_tape.jpg" alt="Step-up insulated with Kapton tape" width="400"> |
+| **3b. Rocker switch & power connector.** The converter's **V1 = VIN** and **GND = GND**. Wire both to the **4P1.25 power connector**, with the rocker switch **interrupting the VIN line**. Mind the Display's pin labeling. Plug it in (double-check polarity!), flip the switch, and confirm the unit powers on. | <img src="screens/switch_wiring.jpg" alt="Power switch wiring" width="400"> |
 | **3c. Speaker.** Wire the speaker to the **2P1.25 connector**, minding polarity per the diagram. The unit should play audio now. | |
 | **3d. Battery level monitor** *(optional)*. Wire the two 10 kΩ resistors in series across **OUT+ and OUT-**, then take a tap off the midpoint. Route it to the **3rd pin of the 8P1.25 connector**, and double-check it lands on **GPIO7**. Calibrate on-screen later (settings → Misc). | See 3a |
-| **3e. Final wiring.** Your connectors going into the Display should look like this. | ![Display wiring](screens/display_wiring.jpg) |
+| **3e. Final wiring.** Your connectors going into the Display should look like this. | <img src="screens/display_wiring.jpg" alt="Display wiring" width="400"> |
 
 ---
 
@@ -164,9 +164,9 @@ Confirm everything works: sound plays on the speaker, the display is responsive,
 
 | Step | Reference |
 | --- | :-: |
-| **Fit the electronics into the lid.** Slot the TP4056 into its space (a dab of glue helps if loose). Slot the speaker into its cutout, routing the wires out through the channel and inward, and fix it with glue. Install the two LiPo cells in the battery tray (I used a little double-sided adhesive so they don't slide, but can still be removed). | ![Pre-assembly layout](screens/tacpad_wiring_1.jpg) |
-| **Prep the main body.** Melt the 4 heat-set inserts into place with a soldering iron, then screw the Display in with the 4 screws, keeping its USB-C side next to the speaker hole so the screen is oriented correctly *(you can always flip it in settings)*. Drop the rocker switch into its slot, then wire everything up and give it one more test. | ![Pre-assembly layout, alternate](screens/tacpad_wiring_2.jpg) |
-| **Close it up.** Tuck the wires away (make sure nothing gets pinched), then fit the lid onto the back of the body, keeping the USB charging port lined up with its slot. Fasten with the 4 M3x8 FHCS, checking everything seats without much resistance. | ![Charging port aligned in its slot](screens/charge_port.jpg) |
+| **Fit the electronics into the lid.** Slot the TP4056 into its space (a dab of glue helps if loose). Slot the speaker into its cutout, routing the wires out through the channel and inward, and fix it with glue. Install the two LiPo cells in the battery tray (I used a little double-sided adhesive so they don't slide, but can still be removed). | <img src="screens/tacpad_wiring_1.jpg" alt="Pre-assembly layout" width="400"> |
+| **Prep the main body.** Melt the 4 heat-set inserts into place with a soldering iron, then screw the Display in with the 4 screws, keeping its USB-C side next to the speaker hole so the screen is oriented correctly *(you can always flip it in settings)*. Drop the rocker switch into its slot, then wire everything up and give it one more test. | <img src="screens/tacpad_wiring_2.jpg" alt="Pre-assembly layout, alternate" width="400"> |
+| **Close it up.** Tuck the wires away (make sure nothing gets pinched), then fit the lid onto the back of the body, keeping the USB charging port lined up with its slot. Fasten with the 4 M3x8 FHCS, checking everything seats without much resistance. | <img src="screens/charge_port.jpg" alt="Charging port aligned in its slot" width="400"> |
 
 ---
 
@@ -178,7 +178,7 @@ To charge, plug a USB-C cable into the back: the inside glows red while charging
 
 | | |
 | :-: | :-: |
-| ![Finished Tacpad](screens/tacpad_2.jpg) | ![Tacpad worn on the arm](screens/tacpad_on_arm.jpg) |
+| <img src="screens/tacpad_2.jpg" alt="Finished Tacpad" width="400"> | <img src="screens/tacpad_on_arm.jpg" alt="Tacpad worn on the arm" width="400"> |
 
 **For Super Earth!**
 
