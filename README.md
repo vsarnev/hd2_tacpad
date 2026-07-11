@@ -6,27 +6,25 @@ A working **HELLDIVERS™ 2 Stratagem Tacpad**: a cosplay prop that's also a rea
 
 Built on an affordable ESP32-S3 touchscreen, it pairs over **Bluetooth** as a wireless keyboard. It's an actual stratagem macropad that *also* looks the part strapped to your wrist on the drop.
 
-![The Tacpad](screens/tacpad.jpg)
+![The Tacpad](screens/tacpad_1.jpg)
 
 > [!NOTE]
-> This is a **fork** of [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad); see [Lineage & Credits](#lineage--credits) below. It runs on the specific device [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR) (a 3.5" ESP32-S3 QSPI touchscreen).
+> This is a **fork** of [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad); see [Lineage & Credits](#lineage--credits). It runs on the specific device [JC3248W535](https://www.aliexpress.com/item/1005007566332450.html?) (a 3.5" ESP32-S3 QSPI touchscreen).
 >
 > **The assembled Tacpad connects over Bluetooth only**, since the enclosure covers the board's USB-C port. The firmware keeps USB support (inherited from the base project) for use on the bare board, e.g. for flashing.
 
----
+## Contents
 
-## Lineage & Credits
-
-This project stands on the shoulders of prior democratic contributions, so please support the originals:
-
-- **Firmware base** is [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad). All the core stratagem-input, loadout, preset, cooldown, and configuration machinery is theirs. This fork is an immersion + input-feel layer on top. Detailed device setup & configuration lives in their [Wiki](https://github.com/unic8s/hd2_macropad/wiki).
-- **Physical Tacpad design** is [Senpaijeffa's *Helldivers 2 Tacpad*](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063) on MakerWorld, the 3D-printed prop this build is based on. *(Print files for this build are in [`3d-print/`](3d-print/).)*
-- **Stratagem icons** are [@nvigneux](https://github.com/nvigneux)'s [Helldivers 2 Stratagems SVG set](https://github.com/nvigneux/Helldivers-2-Stratagems-icons-svg).
-- **Device demo/reference** is [@NorthernMan54](https://github.com/NorthernMan54)'s [JC3248W535EN project](https://github.com/NorthernMan54/JC3248W535EN).
-- **UI & menu SFX** come from [Gromlon Props](https://github.com/gromprops/Helldivers-2-Stratagem-Tacpad); the interface, menu, and stratagem sound effects are from their Helldivers 2 Stratagem Tacpad project.
-- **Voice lines** are HELLDIVERS™ 2 in-game audio, from the community clip collection shared on [r/Helldivers](https://www.reddit.com/r/Helldivers/comments/1c348h6/helldivers_2_short_audio_clips_here_for_your/) ([clips folder](https://drive.google.com/drive/folders/1VT6HKNjR-lEG9xjQJB1dwWCI1ufyEFug)).
-
-**HELLDIVERS™ 2** is © Arrowhead Game Studios, published by Sony Interactive Entertainment. This is a non-commercial fan project and is not affiliated with either.
+- [What this fork adds](#what-this-fork-adds)
+- [Lineage & Credits](#lineage--credits)
+- **Build Guide**
+  - [1. Bill of Materials](#1-bill-of-materials)
+  - [2. 3D Printed Parts](#2-3d-printed-parts)
+  - [3. Electronics & Wiring](#3-electronics--wiring)
+  - [4. Firmware](#4-firmware)
+  - [5. Assembly](#5-assembly)
+  - [6. Finished](#6-finished)
+- [Get the game](#get-the-game) · [Disclaimer](#disclaimer)
 
 ---
 
@@ -40,53 +38,149 @@ Everything from the base firmware, plus a full front-line immersion layer:
 - 🎯 **Manual arm-mode input.** Hold the centre d-pad toggle to *open the stratagem menu* (it holds Ctrl on the host), then tap your code on the arrows. Each valid input is sent **live**, so the in-game menu builds as you type; complete a valid code and it throws + auto-disarms.
 - ⚡ **Crisp, reliable touch input.** The panel's phantom double-taps are fixed at the source, so codes register cleanly even when spammed fast.
 - 🔈 **Volume control** in settings and loudness-normalized audio across every cue and voice line.
-- 🔋 **Battery level indicator.** For a LiPo-powered build, a battery icon + % up top and a voltage readout with on-device calibration, read through the ESP32's ADC. See [Battery monitor](#battery-monitor-optional) for wiring.
+- 🔋 **Battery level indicator.** For a LiPo-powered build, a battery icon + % up top and a voltage readout with on-device calibration, read through the ESP32's ADC.
 
 Loadout selection, presets, user icons, cooldown tracking, ship-module modifiers, and BLE/USB switching all carry over from the base firmware.
 
 ---
 
-## Hardware
+## Lineage & Credits
 
-- **Device:** [JC3248W535](https://s.click.aliexpress.com/e/_DneMCLR), a 3.5" ESP32-S3 QSPI touchscreen (AXS15231B touch controller).
-- **microSD card** holds the audio assets (the stratagem images are compiled into the firmware, not loaded from the card).
-- **3D-printed Tacpad shell** based on [Senpaijeffa's design](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063); STLs in [`3d-print/`](3d-print/).
+This project stands on the shoulders of prior democratic contributions, so please support the originals:
 
-> [!TIP]
-> **Building your own?** The **[Build Guide](BUILD.md)** walks through the bill of materials, wiring (diagram + photos), and assembly.
+- **Firmware base** is [unic8s/hd2_macropad](https://github.com/unic8s/hd2_macropad). All the core stratagem-input, loadout, preset, cooldown, and configuration machinery is theirs. This fork is an immersion + input-feel layer on top. Detailed device setup & configuration lives in their [Wiki](https://github.com/unic8s/hd2_macropad/wiki).
+- **Physical Tacpad design** is [Senpaijeffa's *Helldivers 2 Tacpad*](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063) on MakerWorld, the 3D-printed prop this build is based on.
+- **Stratagem icons** are [@nvigneux](https://github.com/nvigneux)'s [Helldivers 2 Stratagems SVG set](https://github.com/nvigneux/Helldivers-2-Stratagems-icons-svg).
+- **Device demo/reference** is [@NorthernMan54](https://github.com/NorthernMan54)'s [JC3248W535EN project](https://github.com/NorthernMan54/JC3248W535EN).
+- **UI & menu SFX** come from [Gromlon Props](https://github.com/gromprops/Helldivers-2-Stratagem-Tacpad); the interface, menu, and stratagem sound effects are from their Helldivers 2 Stratagem Tacpad project.
+- **Voice lines** are HELLDIVERS™ 2 in-game audio, from the community clip collection shared on [r/Helldivers](https://www.reddit.com/r/Helldivers/comments/1c348h6/helldivers_2_short_audio_clips_here_for_your/) ([clips folder](https://drive.google.com/drive/folders/1VT6HKNjR-lEG9xjQJB1dwWCI1ufyEFug)).
 
-### Battery monitor (optional)
+**HELLDIVERS™ 2** is © Arrowhead Game Studios, published by Sony Interactive Entertainment. This is a non-commercial fan project and is not affiliated with either.
 
-For a LiPo-powered build, the Tacpad can show a live battery **%** + **voltage** in the settings screen. Wire a **voltage divider** from the battery positive to **GPIO7** (broken out on the `P2` "Extended IO" header, `ADC1_CH6`):
+---
 
-```
-battery+ ──[ R1 ]──┬──[ R2 ]── GND
-                   │
-                 GPIO7   (ADC1_CH6)
-```
+# Build Guide
 
-- Use two **equal resistors** (e.g. 10 kΩ / 10 kΩ) for a 1:2 divide, so a full 4.2 V reads ~2.1 V at the pin, safely inside the ADC range. The ratio is a `#define` (`BATT_DIVIDER_RATIO`) in [`src/battery.c`](src/battery.c); set it to `(R1 + R2) / R2` if you use a different pair.
-- ⚠️ **Never wire the raw battery straight to a GPIO.** A full LiPo hits 4.2 V and the ADC input maxes at ~3.3 V, so the divider is mandatory.
-- Calibrate on-device with the **-/+** buttons on the settings screen (0.01 V steps); the offset saves to NVS, so it survives reboots with no reflash.
+How to build the physical Tacpad: gather the parts, print the shell, wire the electronics, flash the firmware, and close it up.
 
-## Build & flash
+## 1. Bill of Materials
 
-Built with [PlatformIO](https://platformio.org/) (ESP-IDF / `espressif32`):
+Part links are examples, not direct recommendations. You may find cheaper sources at local hobby stores, Amazon, etc.
+
+### Electronics
+
+| Qty | Part | Notes |
+| :-: | --- | --- |
+| 1 | [JC3248W535](https://www.aliexpress.com/item/1005007566332450.html?) | 3.5" ESP32-S3 QSPI touchscreen (the brains + display). |
+| 1 | microSD card | For the audio assets. Any size works; the contents are only ~10 MB. |
+| 2 | [3.7V 1100mAh LiPo cell](https://www.aliexpress.com/item/1005004304618610.html?) | Different sizes work too, as long as they fit the battery tray. |
+| 1 | [TP4056 charging module](https://www.aliexpress.com/item/1005006904523567.html?) | LiPo charge management. If you can find one with CC1/CC2 wired for USB-C negotiation, let me know! Otherwise it charges from a USB-A-to-USB-C cable. Micro-USB modules also work. |
+| 1 | [DC-DC step-up (boost) converter, 0.9-5V to 5V](https://www.aliexpress.com/item/1005003479999072.html?) | Boosts the 3.7 V LiPo to a stable 5 V. |
+| 1 | [KCD1 latching power switch](https://www.aliexpress.com/item/32873386670.html?) | External on/off. |
+| 2 | [10 kΩ resistor](https://www.aliexpress.com/item/1005007539842999.html?) | Battery-level voltage divider (optional; see [3d](#3d-battery-level-monitor-optional)). |
+
+### Connectors
+
+A generic [1.25 mm JST connector kit](https://www.aliexpress.com/item/1005008691681233.html?) plus the solder/crimp hardware makes disassembly much easier. Bare-minimum connectors:
+
+| Qty | Connector | Use |
+| :-: | --- | --- |
+| 1 | 4P1.25 JST male | Power into the ESP32's power port. |
+| 1 | 2P1.25 JST male | Speaker into the ESP32's speaker port. |
+| 1 | 8P1.25 JST male | *(optional)* Battery-sense wire to GPIO7 for the battery monitor. |
+| 2 | Male + female JST (any size) | Connect the LiPo cells to the TP4056. I used 2.5 mm. |
+
+### Hardware
+
+| Qty | Part | Notes |
+| :-: | --- | --- |
+| 4 | [M3x4x5mm heat-set insert](https://www.aliexpress.com/item/1005006071488810.html?) | Voron-standard inserts, for fastening the lid to the body. |
+| 4 | M3x8 FCHS | Screws the lid onto the main body. |
+| 3 | Generic Velcro strap | 2 straps on the bottom, 1 on top, for affixing to your cosplay/arm. |
+| As needed | Hookup wire, solder, Kapton tape | For wiring and insulation. |
+
+**Printed parts:** see [Section 2](#2-3d-printed-parts).
+
+---
+
+## 2. 3D Printed Parts
+
+The shell is based on [Senpaijeffa's Helldivers 2 Tacpad](https://makerworld.com/en/models/997088-helldivers-2-tacpad-with-touchscreen-for-cosplay#profileId-1437063). The STLs for this build live in [`3d-print/`](3d-print/):
+
+- [`3d-print/tacpad-body.stl`](3d-print/tacpad-body.stl) is the main body / enclosure.
+- [`3d-print/tacpad-lid.stl`](3d-print/tacpad-lid.stl) is the lid.
+
+**Print settings:** standard settings work for both parts. I recommend at least 2 walls, 15% infill, and 4 top/bottom layers. Supports are required on both, but I've kept them to a minimum: only the internal structure of the main body and the battery tray on the lid need them.
+
+---
+
+## 3. Electronics & Wiring
+
+> [!IMPORTANT]
+> The **wiring diagram is the source of truth**; the steps below are a walkthrough of it. If anything conflicts, trust the diagram.
+
+![Wiring diagram](screens/wiring_diagram.jpg)
+
+**Power flow at a glance:** the unit runs off two 3.7 V 1100 mAh LiPo cells (~6-7 hours of runtime) that feed the TP4056 charging module, so it can charge over USB whether it's switched on or not. The TP4056 feeds the DC-DC step-up converter, which supplies a stable 5 V to the Display through the power switch. The speaker wires straight to the speaker port, and an optional voltage divider taps the battery to GPIO7 for the on-screen battery monitor.
+
+> [!WARNING]
+> Before connecting the two batteries in parallel, make sure they're at a **reasonably similar charge**. Once wired together they'll balance their voltages, so a large difference between them can be hazardous.
+
+| Step | Reference |
+| --- | :-: |
+| **3a. Battery, charging & boost.** Solder two 2-pin JST connectors in parallel onto the TP4056's **BAT+ / BAT-** pads (mind polarity, don't short anything), then plug a battery into each. Connect a USB cable to the TP4056 and confirm power at **OUT+ / OUT-** with a multimeter. Wire **OUT+ → the converter's V0** pad and **OUT- → GND**. *(If adding the battery monitor, solder the two 10 kΩ resistors to OUT+/OUT- now.)* Confirm ~5 V between the converter's **GND and V1** pads (mine reads ~5.4 V, which is fine). | ![TP4056 + step-up wiring](screens/4056_chip_wiring.jpg) |
+| **3a (cont.) 5 V feed + insulation.** Run a wire from the converter's **V1** pad (5 V out) and another from **GND** (either the converter's GND or the TP4056's OUT-); optionally terminate them in a 2P JST so the step-up is easy to disconnect. Then **insulate the converter with Kapton tape** so it can't short against anything. | ![Step-up insulated with Kapton tape](screens/kapton_tape.jpg) |
+| **3b. Rocker switch & power connector.** The converter's **V1 = VIN** and **GND = GND**. Wire both to the **4P1.25 power connector**, with the rocker switch **interrupting the VIN line**. Mind the Display's pin labeling. Plug it in (double-check polarity!), flip the switch, and confirm the unit powers on. | ![Power switch wiring](screens/switch_wiring.jpg) |
+| **3c. Speaker.** Wire the speaker to the **2P1.25 connector**, minding polarity per the diagram. The unit should play audio now. | |
+| **3d. Battery level monitor** *(optional)*. Wire the two 10 kΩ resistors in series across **OUT+ and OUT-**, then take a tap off the midpoint. Route it to the **3rd pin of the 8P1.25 connector**, and double-check it lands on **GPIO7**. Calibrate on-screen later (settings → Misc). | See 3a |
+| **3e. Final wiring.** Your connectors going into the Display should look like this. | ![Display wiring](screens/display_wiring.jpg) |
+
+---
+
+## 4. Firmware
+
+> [!WARNING]
+> Never feed battery power and USB power into the Display at the same time. Switch the unit off before plugging in USB for flashing.
+
+Flash the firmware with [PlatformIO](https://platformio.org/) (ESP-IDF / `espressif32`):
 
 ```sh
 pio run -t upload
 ```
 
-Then copy the contents of `sdcard/` to the root of a microSD card and insert it into the device. On first boot, choose **Bluetooth** (or USB, on the bare board) and your stratagem keybinding in the settings screen; it defaults to **Ctrl + WASD/arrow keys** to match the game.
+Then copy the contents of [`sdcard/`](sdcard/) to the root of a microSD card and insert it. The SD card holds **only the audio** (44.1 kHz / 16-bit / mono WAVs); the stratagem images are compiled into the firmware. On first boot, pair over **Bluetooth** and set your stratagem keybinding in settings (defaults to **Ctrl + WASD/arrow keys**).
+
+Confirm everything works: sound plays on the speaker, the display is responsive, and the battery % reads about right. If you're using the battery monitor, fine-tune it by measuring the real voltage across OUT+/OUT- with a multimeter and adjusting the offset in **settings → Misc** until they match.
 
 > [!TIP]
-> For full step-by-step device assembly, wiring, and configuration, follow unic8s's [Wiki](https://github.com/unic8s/hd2_macropad/wiki). It all applies to this fork.
+> For the base firmware's full configuration options, unic8s's [Wiki](https://github.com/unic8s/hd2_macropad/wiki) applies to this fork.
 
-## Assets (SD card)
+---
 
-The SD card holds **only the audio**. The stratagem images are compiled into the firmware, not read from the card.
+## 5. Assembly
 
-- `sdcard/assets/sound/` holds the WAV sound effects + voice lines (44.1 kHz / 16-bit / mono PCM).
+> [!NOTE]
+> Double-check the firmware is flashed before you start. Once assembled, the Display's USB-C connector is inaccessible. *(The converter has no Kapton tape in the photos below; I insulated it afterwards.)*
+
+| Step | Reference |
+| --- | :-: |
+| **Fit the electronics into the lid.** Slot the TP4056 into its space (a dab of glue helps if loose). Slot the speaker into its cutout, routing the wires out through the channel and inward, and fix it with glue. Install the two LiPo cells in the battery tray (I used a little double-sided adhesive so they don't slide, but can still be removed). | ![Pre-assembly layout](screens/tacpad_wiring_1.jpg) |
+| **Prep the main body.** Melt the 4 heat-set inserts into place with a soldering iron, then screw the Display in with the 4 screws, keeping its USB-C side next to the speaker hole so the screen is oriented correctly *(you can always flip it in settings)*. Drop the rocker switch into its slot, then wire everything up and give it one more test. | ![Pre-assembly layout, alternate](screens/tacpad_wiring_2.jpg) |
+| **Close it up.** Tuck the wires away (make sure nothing gets pinched), then fit the lid onto the back of the body, keeping the USB charging port lined up with its slot. Fasten with the 4 M3x8 FHCS, checking everything seats without much resistance. | ![Charging port aligned in its slot](screens/charge_port.jpg) |
+
+---
+
+## 6. Finished
+
+Congratulations on your finished Tacpad, Helldiver! Use the 3 Velcro strap points to attach it to your cosplay (or wherever you like), or leave it as-is as a display piece.
+
+To charge, plug a USB-C cable into the back: the inside glows red while charging and switches to blue/green once full (check your charging module's exact colour scheme). If the port doesn't quite fit a cable, sand the opening a little to widen it.
+
+| | |
+| :-: | :-: |
+| ![Finished Tacpad](screens/tacpad_2.jpg) | ![Tacpad worn on the arm](screens/tacpad_on_arm.jpg) |
+
+**For Super Earth!**
 
 ---
 
