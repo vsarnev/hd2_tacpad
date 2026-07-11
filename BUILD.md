@@ -15,7 +15,7 @@ Any part links are examples, not direct recommendations. You may find cheaper so
 - **microSD card** - for the audio assets. Any size works; the contents are only ~10 MB.
 - **[2x 3.7V 1100mAh LiPo cells](https://www.aliexpress.com/item/1005004304618610.html?)** - you can use different sizes to suit your goal, as long as they fit in the battery tray.
 - **[TP4056 charging module](https://www.aliexpress.com/item/1005006904523567.html?)** - LiPo charge management. If you can find one with the CC1/CC2 pins correctly wired for USB-C power negotiation, let me know! Otherwise the Tacpad will only charge from a USB-A-to-USB-C cable. A Micro-USB module works too, if you prefer.
-- **[0.9-5V To 5V DC-DC Step-Up Boost Converter Board](https://www.aliexpress.com/item/1005003479999072.html?)** - boosts the 3.7 V LiPo to a stable 5 V.
+- **[0.9-5V To 5V DC-DC Step-Up Boost Converter Board](https://www.aliexpress.com/item/1005003479999072.html?)** - boosts the 3.7V LiPo to a stable 5V.
 - **[KCD1 Latching power switch](https://www.aliexpress.com/item/32873386670.html?)** - external on/off.
 - **[2x 10 kΩ resistors](https://www.aliexpress.com/item/1005007539842999.html?)** - battery-level voltage divider _(optional; see [Battery monitor](README.md#battery-monitor-optional))_.
 
@@ -45,7 +45,7 @@ The shell is based on [Senpaijeffa's Helldivers 2 Tacpad](https://makerworld.com
 - [`3d-print/tacpad-lid.stl`](3d-print/tacpad-lid.stl) is the lid.
 
 ### Print Settings
-Standard settings work for both parts. I recommend at least 2 walls, 15% infill, and 4 top/bottom layers. Supports are required on both, but I've kept them to a minimum: only the internal structure of the main body and the LiPo pouch on the lid need them.
+Standard settings work for both parts. I recommend at least 2 walls, 15% infill, and 4 top/bottom layers. Supports are required on both, but I've kept them to a minimum: only the internal structure of the main body and the battery tray on the lid need them.
 
 ---
 
@@ -56,9 +56,9 @@ The **wiring diagram below is the source of truth**; the written steps are a wal
 ![Wiring diagram](screens/wiring_diagram.jpg)
 
 ### Power flow at a glance
-The unit runs off two 3.7 V 1100 mAh LiPo cells, which give it an estimated 6-7 hours of runtime. They feed the TP4056 charging module, so the unit can charge over USB whether it's switched on or not. Note that the Display's own USB-C port is concealed once assembled, so **flash the unit before final assembly**.
+The unit runs off two 3.7V 1100 mAh LiPo cells, which give it an estimated 6-7 hours of runtime. They feed the TP4056 charging module, so the unit can charge over USB whether it's switched on or not. Note that the Display's own USB-C port is concealed once assembled, so **flash the unit before final assembly**.
 
-The TP4056 then feeds the DC-DC step-up converter, which supplies a stable 5 V to the Display. The power switch sits in that 5 V line so you can turn the unit on and off.
+The TP4056 then feeds the DC-DC step-up converter, which supplies a stable 5V to the Display. The power switch sits in that 5V line so you can turn the unit on and off.
 
 The speaker wires directly to the speaker port (mind the polarity).
 
@@ -74,9 +74,9 @@ Connect a USB cable to the TP4056 to test charging, and use a multimeter on the 
 
 Next, wire OUT+ to the DC-DC converter's V0 pad, and OUT- to its GND pad. If you're adding the battery monitor, it's easiest to solder the two 10 kΩ resistors onto the OUT+/OUT- pads now, at the same time as the wires, though that's optional.
 
-Check the wiring with your multimeter: the converter should read ~5 V between its GND and V1 pads. (Mine reads closer to 5.4 V.)
+Check the wiring with your multimeter: the converter should read ~5V between its GND and V1 pads. (Mine reads closer to 5.4V, which is fine.)
 
-Now run your 5 V feed: a wire from the converter's V1 pad (5 V out) and another from GND (either the converter's GND pad or the TP4056's OUT-).
+Now run your 5V feed: a wire from the converter's V1 pad (5V out) and another from GND (either the converter's GND pad or the TP4056's OUT-).
 
 Optionally, terminate those two wires in a 2P1.25 mm or 2P2.5 mm JST connector so the step-up is easy to connect and disconnect from the power switch, as shown below:
 
@@ -133,7 +133,7 @@ Next, slot the speaker into its cutout, routing the wires out through the channe
 
 Lastly, install the two LiPo cells in the battery slot. I used a little double-sided adhesive to stop them sliding around; it's non-permanent, so I can still pull them out if needed.
 
-For the main body, first melt the 4 heat-set inserts into place with a soldering iron. Then use the 4 screws to fasten the Display, keeping its USB-C side next to the speaker hole so the screen is oriented correctly (no worries if it isn't, you can always flip it in the settings menu). Finally, drop the rocker switch into its slot.
+For the main body, first melt the 4 heat-set inserts into the four corners a soldering iron. The lid will screw into these. Then use the 4 provided with the Display screws to it to the main body, keeping its USB-C side next to the speaker hole so the screen is oriented correctly (no worries if it isn't, you can always flip it in the settings menu). Finally, drop the rocker switch into its slot.
 
 > Note: in the assembly photos below the DC-DC converter has no Kapton tape yet; I insulated it after taking these.
 
