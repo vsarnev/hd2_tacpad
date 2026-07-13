@@ -612,7 +612,7 @@
           "type": "LVGLActionComponent",
           "left": 579,
           "top": 24,
-          "width": 385,
+          "width": 403,
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
@@ -626,7 +626,7 @@
               "fadeModeType": "literal",
               "speed": "MoveDuration",
               "speedType": "expression",
-              "delay": 0,
+              "delay": 2000,
               "delayType": "literal",
               "useStack": true,
               "useStackType": "literal"
@@ -636,7 +636,7 @@
         {
           "objID": "73ef9fb5-4f26-4529-bd67-a4910d25f9b3",
           "type": "CallActionActionComponent",
-          "left": 613,
+          "left": 582,
           "top": 204,
           "width": 137,
           "height": 24,
@@ -651,8 +651,8 @@
         {
           "objID": "ced126f1-191c-4add-987c-970c622cdff4",
           "type": "CallActionActionComponent",
-          "left": 613,
-          "top": 254,
+          "left": 580,
+          "top": 256,
           "width": 172,
           "height": 24,
           "customInputs": [],
@@ -666,7 +666,7 @@
         {
           "objID": "36f4835d-0075-4c9d-b155-3e142603acb5",
           "type": "LVGLActionComponent",
-          "left": 555,
+          "left": 582,
           "top": 320,
           "width": 409,
           "height": 54,
@@ -698,7 +698,7 @@
         {
           "objID": "16000890-bca1-4246-9164-308e86d9e4e6",
           "type": "CallActionActionComponent",
-          "left": 716,
+          "left": 752,
           "top": 106,
           "width": 87,
           "height": 24,
@@ -711,7 +711,7 @@
           }
         },
         {
-          "objID": "7c4c68ca-31f0-4b68-a68c-67ad3ff0e259",
+          "objID": "3e2fb2be-356b-4388-9878-153966b5e25c",
           "type": "DelayActionComponent",
           "left": 579,
           "top": 106,
@@ -719,7 +719,7 @@
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
-          "milliseconds": "1500"
+          "milliseconds": "3000"
         }
       ],
       "connectionLines": [
@@ -745,24 +745,24 @@
           "input": "@seqin"
         },
         {
-          "objID": "356cd52d-cfcc-45f0-f595-59a1d26ee442",
-          "source": "baf9c7dd-bbc0-4a44-f493-0e4848e8e145",
-          "output": "@seqout",
-          "target": "7c4c68ca-31f0-4b68-a68c-67ad3ff0e259",
+          "objID": "5fd54ad5-d087-410e-8ea9-d19ae823eb20",
+          "source": "f90b60d0-0665-1f2d-d7bb-8672ca4b6e2e",
+          "output": "SCREEN_LOADED",
+          "target": "baf9c7dd-bbc0-4a44-f493-0e4848e8e145",
           "input": "@seqin"
         },
         {
-          "objID": "4be694cf-8e68-470a-d827-4075bb5445bf",
-          "source": "7c4c68ca-31f0-4b68-a68c-67ad3ff0e259",
+          "objID": "a4408b7d-4a61-436a-d7f6-4ebf2aa945d4",
+          "source": "3e2fb2be-356b-4388-9878-153966b5e25c",
           "output": "@seqout",
           "target": "16000890-bca1-4246-9164-308e86d9e4e6",
           "input": "@seqin"
         },
         {
-          "objID": "85948dfb-9195-4d21-9420-879866294fe6",
+          "objID": "d4f22359-93c0-42f7-9e1a-70733c23b9a8",
           "source": "f90b60d0-0665-1f2d-d7bb-8672ca4b6e2e",
           "output": "SCREEN_LOADED",
-          "target": "baf9c7dd-bbc0-4a44-f493-0e4848e8e145",
+          "target": "3e2fb2be-356b-4388-9878-153966b5e25c",
           "input": "@seqin"
         }
       ],
