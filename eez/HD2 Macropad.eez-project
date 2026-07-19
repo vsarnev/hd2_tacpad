@@ -612,7 +612,7 @@
           "type": "LVGLActionComponent",
           "left": 579,
           "top": 24,
-          "width": 403,
+          "width": 471,
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
@@ -626,8 +626,8 @@
               "fadeModeType": "literal",
               "speed": "MoveDuration",
               "speedType": "expression",
-              "delay": 2000,
-              "delayType": "literal",
+              "delay": "IntroDuration",
+              "delayType": "expression",
               "useStack": true,
               "useStackType": "literal"
             }
@@ -668,7 +668,7 @@
           "type": "LVGLActionComponent",
           "left": 582,
           "top": 320,
-          "width": 409,
+          "width": 477,
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
@@ -684,8 +684,8 @@
               "endType": "literal",
               "delay": 0,
               "delayType": "literal",
-              "time": 2000,
-              "timeType": "literal",
+              "time": "IntroDuration",
+              "timeType": "expression",
               "relative": false,
               "relativeType": "literal",
               "instant": false,
@@ -715,11 +715,11 @@
           "type": "DelayActionComponent",
           "left": 579,
           "top": 106,
-          "width": 87,
+          "width": 243,
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
-          "milliseconds": "3000"
+          "milliseconds": "MoveDuration + IntroDuration + 100"
         }
       ],
       "connectionLines": [
@@ -766,7 +766,16 @@
           "input": "@seqin"
         }
       ],
-      "localVariables": [],
+      "localVariables": [
+        {
+          "objID": "042b9708-68a2-457c-d523-8fcfdb45513d",
+          "name": "IntroDuration",
+          "type": "integer",
+          "defaultValue": "2000",
+          "persistent": false,
+          "native": false
+        }
+      ],
       "userProperties": [],
       "name": "Intro",
       "left": 0,
